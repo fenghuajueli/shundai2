@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#168BEB" >
+
+        <ImageView
+            android:id="@+id/imgPersonHead"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/person_head" />
+
+        <TextView
+            android:id="@+id/txtPersonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgPersonHead"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="张晓晓"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtPersonQianMing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtPersonName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="顺带在手，快递无忧"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:background="#EFEFF4"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="165dp"
+            android:layout_marginTop="20dp"
+            android:background="#FFFFFF" >
+            
+            <View
+                android:id="@+id/viewPersonFG0"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <RelativeLayout
+                android:id="@+id/person_grup_myinfo"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@id/viewPersonFG0" >
+
+                <ImageView
+                    android:id="@+id/imgPersonInfo"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/person_renzhenxinxi" />
+
+                <TextView
+                    android:id="@+id/txtPersonInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/imgPersonInfo"
+                    android:text="个人信息"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/imgPersonInfoNext"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/petit_next" />
+            </RelativeLayout>
+
+            <View
+                android:layout_below="@id/person_grup_myinfo"
+                android:id="@+id/viewPersonFG1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <RelativeLayout
+                android:id="@+id/person_grup_xinxi"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@id/viewPersonFG1" >
+
+                <ImageView
+                    android:id="@+id/imgPersonRenZhenXinXi"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/person_renzhenxinxi" />
+
+                <TextView
+                    android:id="@+id/txtPersonRenZhenXinXi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/imgPersonRenZhenXinXi"
+                    android:text="我的认证信息"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/imgPersonRenZhenXinXiNext"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/petit_next" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/viewPersonFG2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/person_grup_xinxi"
+                android:background="@android:color/darker_gray" />
+
+            <RelativeLayout
+                android:id="@+id/person_grup_shensu"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@id/viewPersonFG2" >
+
+                <ImageView
+                    android:id="@+id/imgPersonShenSu"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/person_renwushensu" />
+
+                <TextView
+                    android:id="@+id/txtPersonShenSu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/imgPersonShenSu"
+                    android:text="任务申诉"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/imgPersonShenSuNext"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/petit_next" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/viewPersonFG3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/person_grup_shensu"
+                android:background="@android:color/darker_gray" />
+
+            <RelativeLayout
+                android:id="@+id/person_grup_about"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@id/viewPersonFG3" >
+
+                <ImageView
+                    android:id="@+id/imgPersonAbout"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/person_aboutshundai" />
+
+                <TextView
+                    android:id="@+id/txtPersonAbout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/imgPersonAbout"
+                    android:text="关于顺带"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/imgPersonAboutNext"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/petit_next" />
+            </RelativeLayout>
+            <View
+                android:id="@+id/viewPersonFG4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/person_grup_about"
+                android:background="@android:color/darker_gray" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#F25C60"
+        android:text="退    出"
+        android:layout_marginBottom="10dp"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp" />
+
+</LinearLayout>

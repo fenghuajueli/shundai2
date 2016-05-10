@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.gzcjteam.shundai.MainActivity" >
+    
+    <com.gzcjteam.shundai.weight.MainMyRenwuTopBar
+        android:id="@+id/activity_main_renwu_bar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:visibility="gone" >
+    </com.gzcjteam.shundai.weight.MainMyRenwuTopBar>
+
+    <com.gzcjteam.shundai.weight.MainTopBar
+        android:id="@+id/activity_main_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" >
+    </com.gzcjteam.shundai.weight.MainTopBar>
+
+    <FrameLayout
+        android:id="@+id/home_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </FrameLayout>
+
+    <android.support.v4.app.FragmentTabHost
+        android:id="@android:id/tabhost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </TabWidget>
+
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="0dp"
+            android:layout_height="0dp" >
+        </FrameLayout>
+    </android.support.v4.app.FragmentTabHost>
+
+</LinearLayout>

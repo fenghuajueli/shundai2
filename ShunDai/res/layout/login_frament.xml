@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="账户" />
+
+        <EditText
+            android:id="@+id/Account"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/shape"
+            android:hint="手机/邮箱" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="密码" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/shape"
+            android:hint="请输入密码" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_green_selector"
+        android:text="登录"
+        android:textColor="#FFFFFFFF" />
+
+    <Button
+        android:id="@+id/btn_forgive_password"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:gravity="right"
+        android:background="@null"
+        android:text="忘记密码"
+        android:textColor="#000000" />
+      
+    <Button
+        android:id="@+id/btn_sign_up"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_green_selector"
+        android:text="免费注册"
+        android:textColor="#FFFFFFFF" />
+
+</LinearLayout>
