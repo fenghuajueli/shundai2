@@ -15,16 +15,18 @@
             android:layout_width="80dp"
             android:layout_height="40dp"
             android:gravity="center"
-            android:text="账户" />
+            android:text="密码" />
 
         <EditText
-            android:id="@+id/Account"
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginRight="30dp"
-            android:inputType="number"
             android:background="@drawable/shape"
-            android:hint="手机号" />
+            android:inputType="textPassword"
+            android:hint="包含字母和数字且不少于6个字符"
+            android:maxLines="1"
+            android:singleLine="true" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,50 +42,26 @@
             android:text="密码" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/confium_password"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginRight="30dp"
-            android:inputType="textPassword"
             android:background="@drawable/shape"
-            android:hint="请输入密码" />
+            android:inputType="textPassword"
+            android:hint="请再次输入密码"
+            android:maxLines="1"
+            android:singleLine="true" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_sign_in"
+        android:id="@+id/btn_changepwd"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_green_selector"
-        android:text="登录"
+        android:text="确认修改"
         android:textColor="#FFFFFFFF" />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:weightSum="2" >
-
-        <Button
-            android:id="@+id/btn_sign_up"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:text="免费注册"
-            android:textColor="#000000" />
-
-        <Button
-            android:id="@+id/btn_forgive_password"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:text="忘记密码"
-            android:textColor="#000000" />
-    </LinearLayout>
 
 </LinearLayout>

@@ -6,6 +6,7 @@ import com.loopj.android.http.RequestParams;
 
 public class RequestUtils {
 	public static AsyncHttpClient client = new AsyncHttpClient();
+	
 
 	public static void ClinetGet(String url, NetCallBack cb) {
 		client.get(url, cb);
@@ -13,6 +14,7 @@ public class RequestUtils {
 
 	public static void ClientPost(String url, RequestParams params,
 			NetCallBack cb) {
+		client.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
 		client.post(url, params, cb);
 	}
 }

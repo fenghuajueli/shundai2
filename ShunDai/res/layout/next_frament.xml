@@ -18,12 +18,13 @@
             android:text="密码" />
 
         <EditText
-            android:id="@+id/sign_phone"
+            android:id="@+id/nrpassword"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginRight="30dp"
             android:background="@drawable/shape"
             android:hint="包含字母和数字且不少于6个字符"
+            android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true" />
     </LinearLayout>
@@ -41,27 +42,28 @@
             android:text="密码" />
 
         <EditText
-            android:id="@+id/confium_password"
+            android:id="@+id/nconfium_password"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginRight="30dp"
             android:background="@drawable/shape"
             android:hint="请再次输入密码"
+            android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true" />
     </LinearLayout>
 
     <TextView
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="注册表示您同意'顺带'服务使用协议和隐私条款"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:text="注册表示您同意&apos;顺带&apos;服务使用协议和隐私条款"
         android:textColor="#1E8BEA"
         android:textSize="12sp" />
 
     <Button
-        android:id="@+id/sign_up"
+        android:id="@+id/regiester"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="30dp"

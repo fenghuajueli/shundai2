@@ -29,10 +29,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class NextFrament extends Fragment implements OnClickListener{
+public class PwdNextFrament extends Fragment implements OnClickListener{
 	private EditText  tv_pwd;
 	private EditText  tv_cpwd;	
-	private Button  btn_regiester;
+	private Button  btn_change;
 	protected static final int USERISCUNZAI = 0;
 	protected static final int REGIESTERFAILE = 1;
 	protected static final int SERVERERROR = 2;
@@ -40,26 +40,26 @@ public class NextFrament extends Fragment implements OnClickListener{
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view=inflater.inflate(R.layout.next_frament, container,false);
-		tv_pwd=(EditText) view.findViewById(R.id.nrpassword);
-		tv_cpwd=(EditText) view.findViewById(R.id.nconfium_password);
-		btn_regiester=(Button) view.findViewById(R.id.regiester);
-		btn_regiester.setOnClickListener(this);
+		View view=inflater.inflate(R.layout.pwd_next_frament, container,false);
+		tv_pwd=(EditText) view.findViewById(R.id.password);
+		tv_cpwd=(EditText) view.findViewById(R.id.confium_password);
+		btn_change=(Button) view.findViewById(R.id.btn_changepwd);
+		btn_change.setOnClickListener(this);
 		return view;
 	}
 
 	@Override
 	public void onClick(View v) {
-		if (v==btn_regiester) {
-			//执行注册
-			Regiester();	
+		if (v==btn_change) {
+			//修改密码
+			ChangePWD();	
 		}
 	}
 
 	/**
-	 * 注册
+	 * 确认修改密码
 	 */
-	private void Regiester() {		
+	private void ChangePWD() {
 		shp=getActivity().getSharedPreferences("PHONEANDYAN", getActivity().MODE_PRIVATE);
 		String  phone=shp.getString("phone", "");
 		String pwd=tv_pwd.getText().toString();//密码
@@ -71,15 +71,15 @@ public class NextFrament extends Fragment implements OnClickListener{
 		if (cpwd.isEmpty()) {
 			ToastUtil.show(getActivity(), "密码不能为空");
 			return;
-		}
+		}		
 		if (!pwd.equals(cpwd)) {
 			ToastUtil.show(getActivity(), "两次输入的密码不一致！");
 			return;
 		}
-		String url = "http://119.29.140.85/index.php/user/register";
+		String url = "http://119.29.140.85/index.php/user/reset_password";
 		RequestParams params = new RequestParams();
-		params.put("phone", phone);
-		params.put("password", pwd);
+		params.put("phone",phone);
+		params.put("password", pwd);		
 		RequestUtils.ClientPost(url, params, new NetCallBack() {
 
 			@Override
@@ -88,11 +88,11 @@ public class NextFrament extends Fragment implements OnClickListener{
 					JSONObject json = new JSONObject(result);
 					Boolean status = json.getBoolean("status");
 					String info = json.getString("info");
-					if (status) {
-						// 注册成功	跳转到登录界面	
+					if (status) {	
+						//修改成功后跳转到登录界面						
 						ToastUtil.show(getActivity(), info);
 						startActivity(new Intent(getActivity(), LoginActivity.class));
-						getActivity().finish();
+						getActivity().finish();					
 					} else {
 						ToastUtil.show(getActivity(), info);
 					}
@@ -100,13 +100,11 @@ public class NextFrament extends Fragment implements OnClickListener{
 					e.printStackTrace();
 				}
 			}
-
 			@Override
 			public void onMyFailure(Throwable arg0) {
 				ToastUtil.show(getActivity(), "服务器错误！");
 			}
-		});
-		
+		});		
 		
 	}
 
