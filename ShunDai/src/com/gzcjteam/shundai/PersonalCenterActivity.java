@@ -1,6 +1,9 @@
 package com.gzcjteam.shundai;
 
-import com.gzcjteam.shundai.fargment.PersonalInfoFragment;
+import com.gzcjteam.shundai.fargment.MyAboutFragment;
+import com.gzcjteam.shundai.fargment.MyRenZhenInfoFragment;
+import com.gzcjteam.shundai.fargment.MyInfoFragment;
+import com.gzcjteam.shundai.fargment.MyTastShenSuFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,18 +28,33 @@ public class PersonalCenterActivity extends FragmentActivity {
 
 		SkipToFragment();
 
-
 	}
-
+	
+	//个人中心页面 跳转到不同的fragment页面
 	private void SkipToFragment() {
+		fm = getSupportFragmentManager();
 		if (pageName.equals("PersonalInfo") && pageName != null) {
-			fm = getSupportFragmentManager();
-			fragment = new PersonalInfoFragment(getApplication(), backstatcTag);
+			fragment = new MyInfoFragment(getApplication(), backstatcTag);
 			FragmentTransaction transaction = fm.beginTransaction();
 			transaction.add(R.id.fm_personal_center, fragment, backstatcTag);
 			// transaction.addToBackStack(backstatcTag);
 			transaction.commit();
-		} else {
+		} else if (pageName.equals("MyRenZhenInfo") && pageName != null) {
+			fragment = new MyRenZhenInfoFragment();
+			FragmentTransaction transaction = fm.beginTransaction();
+			transaction.add(R.id.fm_personal_center, fragment);
+			transaction.commit();
+		}else if (pageName.equals("MyTastShenSu")&&pageName!=null) {
+			fragment=new MyTastShenSuFragment();
+			FragmentTransaction transaction=fm.beginTransaction();
+			transaction.add(R.id.fm_personal_center, fragment);
+			transaction.commit();
+		} else if (pageName.equals("MyAboutShunDai")&&pageName!=null) {
+			fragment=new MyAboutFragment();
+			FragmentTransaction transaction=fm.beginTransaction();
+			transaction.add(R.id.fm_personal_center, fragment);
+			transaction.commit();
+		}else {
 			Toast.makeText(this, "系统错误，请检查源代码！", 1).show();
 		}
 	}

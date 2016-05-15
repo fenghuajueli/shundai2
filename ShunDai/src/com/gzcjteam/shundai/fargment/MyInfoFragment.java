@@ -11,14 +11,14 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class PersonalInfoFragment extends Fragment implements OnClickListener {
+public class MyInfoFragment extends Fragment implements OnClickListener {
 
 	private static String backstatcTag = "PERSONALINFO";
 	private static String personalCenterTag;
 	private Context context;
 	private ImageView img_PersonalInfo_back;
 
-	public PersonalInfoFragment(Context context, String tag) {
+	public MyInfoFragment(Context context, String tag) {
 		super();
 		this.context = context;
 		this.personalCenterTag = tag;
