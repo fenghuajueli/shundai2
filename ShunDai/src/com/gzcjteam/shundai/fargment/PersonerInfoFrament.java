@@ -63,7 +63,8 @@ public class PersonerInfoFrament extends Fragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.imgPersonInfoNext:
-			Intent intent=new Intent();
+			Intent intent = new Intent();
+			intent.putExtra("PageName", "PersonalInfo");
 			intent.setClass(getActivity(), PersonalCenterActivity.class);
 			startActivity(intent);
 			break;
