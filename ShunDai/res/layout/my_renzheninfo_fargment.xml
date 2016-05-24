@@ -4,10 +4,220 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="我的认证信息" />
+    <RelativeLayout
+        android:id="@+id/tab_pserna_info"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/btn_normal" >
+
+        <ImageView
+            android:id="@+id/img_PersonalIdentif_back"
+            android:layout_width="20dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/img_PersonalIdentif_back"
+            android:text="个人中心"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="身份认证"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp" >
+
+            <TextView
+                android:id="@+id/txt_renzhen_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="姓    名" />
+
+            <EditText
+                android:id="@+id/edt_renzhen_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@id/txt_renzhen_username"
+                android:hint="请输入您的真实姓名" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp" >
+
+            <TextView
+                android:id="@+id/txt_renzhen_xuehao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="学    号" />
+
+            <EditText
+                android:id="@+id/edt_renzhen_xuehao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@id/txt_renzhen_xuehao"
+                android:hint="请输入您的学号" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp" >
+
+            <TextView
+                android:id="@+id/txt_renzhen_zhenjian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="证件号" />
+
+            <EditText
+                android:id="@+id/edt_renzhen_zhenjian"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@id/txt_renzhen_zhenjian"
+                android:hint="请输入您的身份证号" />
+        </RelativeLayout>
+
+        <!-- 学校 -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp" >
+
+            <TextView
+                android:id="@+id/txt_renzhen_school"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="学    校" />
+
+            <EditText
+                android:id="@+id/edt_renzhen_school"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@id/txt_renzhen_school"
+                android:hint="请选择学校" />
+        </RelativeLayout>
+        <!-- 宿舍 -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp" >
+
+            <TextView
+                android:id="@+id/txt_renzhen_room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="宿    舍" />
+
+            <EditText
+                android:id="@+id/edt_renzhen_room"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@id/txt_renzhen_room"
+                android:hint="请输入宿舍和寝室号" />
+        </RelativeLayout>
+
+        <!-- 证件上传 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="horizontal" >
+
+            <RelativeLayout
+                android:id="@+id/rtl_shenfengzhen"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/txt_shenfenzhen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="身份证照片" />
+
+                <ImageView
+                    android:id="@+id/img_shenfenzhen"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#989C9C"
+                    android:layout_below="@id/txt_shenfenzhen" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rtl_xueshengzhen"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/txt_xueshengzhen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="学生证照片" />
+
+                <ImageView
+                    android:id="@+id/img_xueshengzhen"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#B2EFFF"
+                    android:layout_below="@id/txt_xueshengzhen" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <Button
+            android:layout_marginTop="30dp"
+            android:id="@+id/btn_renzhen_save"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="#7CD43A"
+            android:text="提    交" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -23,7 +23,7 @@ public class MyRenZhenInfoFragment extends Fragment {
 	}
 
 	private void initView() {
-
+		
 	}
 
 }
