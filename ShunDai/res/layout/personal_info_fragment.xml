@@ -1,397 +1,422 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlv_personal_info_center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:id="@+id/tab_pserna_info"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#0076D8" >
-
-        <ImageView
-            android:id="@+id/img_PersonalInfo_back"
-            android:layout_width="20dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/img_PersonalInfo_back"
-            android:text="个人中心"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="个人信息"
-            android:textSize="16sp" />
-    </RelativeLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#EFEFEF"
         android:orientation="vertical" >
 
-        <!-- 头像部分 -->
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
-
         <RelativeLayout
+            android:id="@+id/tab_pserna_info"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="#FFFFFF" >
+            android:layout_height="48dp"
+            android:background="#0076D8" >
+
+            <ImageView
+                android:id="@+id/img_PersonalInfo_back"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/back" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:text="头像"
-                android:textSize="16sp" />
+                android:layout_toRightOf="@id/img_PersonalInfo_back"
+                android:text="个人中心"
+                android:textSize="12sp" />
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentRight="true"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/person_head" />
+                android:text="个人信息"
+                android:textSize="16sp" />
         </RelativeLayout>
 
-        <!-- 昵称 -->
-
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+            android:layout_height="match_parent"
+            android:background="#EFEFEF"
+            android:orientation="vertical" >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="#FFFFFF" >
+            <!-- 头像部分 -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:text="昵称"
-                android:textSize="16sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
 
-            <ImageView
-                android:id="@+id/imgPersonalName"
-                android:layout_width="25dp"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="#FFFFFF" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="头像"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/imgPersonalheadnext"
+                    android:layout_width="25dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/petit_next" />
+
+                <ImageView
+                    android:id="@+id/img_change_head_pic"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/imgPersonalheadnext"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/person_head" />
+            </RelativeLayout>
+
+            <!-- 昵称 -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <RelativeLayout
+                android:id="@+id/rlv_personinfo_chenni"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/petit_next" />
+                android:background="#FFFFFF" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toLeftOf="@id/imgPersonalName"
-                android:text="张晓晓"
-                android:textSize="16sp" />
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="昵称"
+                    android:textSize="16sp" />
 
-        <!-- 手机 -->
+                <ImageView
+                    android:id="@+id/imgPersonalName"
+                    android:layout_width="25dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/petit_next" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toLeftOf="@id/imgPersonalName"
+                    android:text="张晓晓"
+                    android:textSize="16sp" />
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="#FFFFFF" >
+            <!-- 手机 -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:text="手机"
-                android:textSize="16sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
 
-            <ImageView
-                android:id="@+id/imgPersonalPhone"
-                android:layout_width="25dp"
+            <RelativeLayout
+                android:id="@+id/rlv_personinfo_phone"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/petit_next" />
+                android:background="#FFFFFF" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toLeftOf="@id/imgPersonalPhone"
-                android:text="18585453465"
-                android:textSize="16sp" />
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="手机"
+                    android:textSize="16sp" />
 
-        <!-- 性别 -->
+                <ImageView
+                    android:id="@+id/imgPersonalPhone"
+                    android:layout_width="25dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/petit_next" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toLeftOf="@id/imgPersonalPhone"
+                    android:text="18585453465"
+                    android:textSize="16sp" />
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="#FFFFFF" >
+            <!-- 性别 -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:text="性别"
-                android:textSize="16sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
 
-            <ImageView
-                android:id="@+id/imgPersonalSex"
-                android:layout_width="25dp"
+            <RelativeLayout
+                android:id="@+id/rlv_personinfo_sex"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/petit_next" />
+                android:background="#FFFFFF" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toLeftOf="@id/imgPersonalSex"
-                android:text="女"
-                android:textSize="16sp" />
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="性别"
+                    android:textSize="16sp" />
 
-        <!-- 学校 -->
+                <ImageView
+                    android:id="@+id/imgPersonalSex"
+                    android:layout_width="25dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/petit_next" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toLeftOf="@id/imgPersonalSex"
+                    android:text="女"
+                    android:textSize="16sp" />
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="#FFFFFF" >
+            <!-- 学校 -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:text="学校"
-                android:textSize="16sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
 
-            <ImageView
-                android:id="@+id/imgPersonalSchool"
-                android:layout_width="25dp"
+            <RelativeLayout
+                android:id="@+id/rlv_personinfo_school"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/petit_next" />
+                android:background="#FFFFFF" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toLeftOf="@id/imgPersonalSchool"
-                android:text="贵州财经大学"
-                android:textSize="16sp" />
-        </RelativeLayout>
-        <!-- 地址管理 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="学校"
+                    android:textSize="16sp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+                <ImageView
+                    android:id="@+id/imgPersonalSchool"
+                    android:layout_width="25dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/petit_next" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="#FFFFFF" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toLeftOf="@id/imgPersonalSchool"
+                    android:text="贵州财经大学"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+            <!-- 地址管理 -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:text="地址管理 "
-                android:textSize="16sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
 
-            <ImageView
-                android:id="@+id/imgPersonalRoom"
-                android:layout_width="25dp"
+            <RelativeLayout
+                android:id="@+id/rlv_personinfo_address"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/petit_next" />
+                android:background="#FFFFFF" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toLeftOf="@id/imgPersonalRoom"
-                android:text="玉兰苑三栋365寝室"
-                android:textSize="16sp" />
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="地址管理 "
+                    android:textSize="16sp" />
 
-        <!-- 个性签名 -->
+                <ImageView
+                    android:id="@+id/imgPersonalRoom"
+                    android:layout_width="25dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/petit_next" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toLeftOf="@id/imgPersonalRoom"
+                    android:text="玉兰苑三栋365寝室"
+                    android:textSize="16sp" />
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="#FFFFFF" >
+            <!-- 个性签名 -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:text="个性签名 "
-                android:textSize="16sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
 
-            <ImageView
-                android:id="@+id/imgPersonalSay"
-                android:layout_width="25dp"
+            <RelativeLayout
+                android:id="@+id/rlv_personinfo_log"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/petit_next" />
+                android:background="#FFFFFF" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toLeftOf="@id/imgPersonalSay"
-                android:text="顺带在手，快递无忧"
-                android:textSize="16sp" />
-        </RelativeLayout>
-        <!-- 邮箱 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="个性签名 "
+                    android:textSize="16sp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+                <ImageView
+                    android:id="@+id/imgPersonalSay"
+                    android:layout_width="25dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/petit_next" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="#FFFFFF" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toLeftOf="@id/imgPersonalSay"
+                    android:text="顺带在手，快递无忧"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+            <!-- 邮箱 -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:text="邮箱"
-                android:textSize="16sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
 
-            <ImageView
-                android:id="@+id/imgPersonalEmail"
-                android:layout_width="25dp"
+            <RelativeLayout
+                android:id="@+id/rlv_personinfo_email"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/petit_next" />
+                android:background="#FFFFFF" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toLeftOf="@id/imgPersonalEmail"
-                android:text="766792555@qq.com"
-                android:textSize="16sp" />
-        </RelativeLayout>
-        <!-- QQ -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="邮箱"
+                    android:textSize="16sp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+                <ImageView
+                    android:id="@+id/imgPersonalEmail"
+                    android:layout_width="25dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/petit_next" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="#FFFFFF" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toLeftOf="@id/imgPersonalEmail"
+                    android:text="766792555@qq.com"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+            <!-- QQ -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:text="QQ"
-                android:textSize="16sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
 
-            <ImageView
-                android:id="@+id/imgPersonalQQ"
-                android:layout_width="25dp"
+            <RelativeLayout
+                android:id="@+id/rlv_personinfo_QQ"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/petit_next" />
+                android:background="#FFFFFF" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toLeftOf="@id/imgPersonalQQ"
-                android:text="766792555"
-                android:textSize="16sp" />
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="QQ"
+                    android:textSize="16sp" />
 
-         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+                <ImageView
+                    android:id="@+id/imgPersonalQQ"
+                    android:layout_width="25dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/petit_next" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toLeftOf="@id/imgPersonalQQ"
+                    android:text="766792555"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

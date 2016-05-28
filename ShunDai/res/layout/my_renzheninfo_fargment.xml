@@ -212,9 +212,10 @@
         </LinearLayout>
 
         <Button
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:id="@+id/btn_renzhen_save"
             android:layout_width="match_parent"
+            android:textSize="18sp"
             android:layout_height="30dp"
             android:background="#7CD43A"
             android:text="提    交" />

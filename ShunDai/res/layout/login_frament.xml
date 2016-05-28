@@ -24,7 +24,8 @@
             android:layout_marginRight="30dp"
             android:inputType="number"
             android:background="@drawable/shape"
-            android:hint="手机号" />
+            android:hint="手机号" 
+            android:text="18585436594"/>
     </LinearLayout>
 
     <LinearLayout
@@ -46,6 +47,7 @@
             android:layout_marginRight="30dp"
             android:inputType="textPassword"
             android:background="@drawable/shape"
+            android:text="123456"
             android:hint="请输入密码" />
     </LinearLayout>
 
