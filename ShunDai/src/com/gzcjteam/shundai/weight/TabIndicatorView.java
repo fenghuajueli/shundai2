@@ -27,6 +27,7 @@ public class TabIndicatorView extends RelativeLayout {
 		ivChatImg = (ImageView) findViewById(R.id.tab_indicator_icon);
 		tvChatHint = (TextView) findViewById(R.id.tab_indicator_hint);
 		tvChatUnRead = (TextView) findViewById(R.id.tab_indicator_unread);
+		tvChatUnRead.setVisibility(View.GONE);
 		//setNoReadCount(0);
 	}
 

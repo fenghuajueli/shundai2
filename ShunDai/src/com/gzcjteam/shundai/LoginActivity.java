@@ -13,6 +13,7 @@ import com.gzcjteam.shundai.utils.RequestUtils;
 import com.gzcjteam.shundai.utils.ToastUtil;
 import com.gzcjteam.shundai.utils.getUserInfo;
 import com.gzcjteam.shundai.weight.NormalTopBar;
+import com.gzcjteam.shundai.weight.PullUpDialog;
 import com.loopj.android.http.RequestParams;
 
 import android.app.Activity;
@@ -44,8 +45,10 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 	private SharedPreferences shp;
 	private String FLAG = "";
     private SignUpFrament  signup=new SignUpFrament();
-	
-	
+    PullUpDialog  dia;
+    private  String  PWD="";
+    
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,7 +67,8 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 		transaction.replace(R.id.contanier_login, currentFra, currentTag);
 		transaction.addToBackStack(currentTag);
 		transaction.commit();
-
+       	
+		
 	}
 
 	@Override
@@ -76,6 +80,9 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 
 	public void go2SignIn(String user, String pwd) {
 		// 执行登陆
+		PWD=pwd;
+		dia=new PullUpDialog(LoginActivity.this, R.style.adialog, "登录中。。");
+		dia.show();
 		String url = "http://119.29.140.85/index.php/user/login";
 		RequestParams params = new RequestParams();
 		params.put("phone", user);
@@ -92,21 +99,25 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 					if (status) {
 						// 登陆成功
 						data = json.getJSONObject("data");
-						saveConfig(data);
+						saveConfig(data,PWD);
 						setUserInfo(data);
 						startActivity(new Intent().setClass(LoginActivity.this,
 								MainActivity.class));
+						dia.dismiss();
 						finish();
 					} else {
 						ToastUtil.show(LoginActivity.this, info);
+						dia.dismiss();
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
+					dia.dismiss();
 				}
 			}
 
 			@Override
 			public void onMyFailure(Throwable arg0) {
+				dia.dismiss();
 				ToastUtil.show(LoginActivity.this, "未联网或服务器错误！");
 			}
 		});
@@ -118,12 +129,12 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 	 *             保存用户信息到手机
 	 * 
 	 */
-	public void saveConfig(JSONObject data) throws JSONException {
+	public void saveConfig(JSONObject data,String pwd) throws JSONException {
 		shp = getSharedPreferences("USERCONFIG", MODE_PRIVATE);
 		Editor editor = shp.edit();
 		editor.putString("id", data.getString("id"));
 		editor.putString("phone", data.getString("phone"));
-		editor.putString("password", data.getString("password"));
+		editor.putString("password", pwd);
 		editor.putString("nick", data.getString("nick"));
 		editor.putString("head_pic_url", data.getString("head_pic_url"));
 		editor.putString("rank", data.getString("rank"));
@@ -140,7 +151,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 	 *             设置用户信息，方便调用
 	 */
 	public void setUserInfo(JSONObject data) throws JSONException {
-		getUserInfo userinf = new getUserInfo();
+		getUserInfo userinf = getUserInfo.getInstance();
 		userinf.setId(data.getString("id"));
 		userinf.setPhone(data.getString("phone"));
 		userinf.setPassword(data.getString("password"));

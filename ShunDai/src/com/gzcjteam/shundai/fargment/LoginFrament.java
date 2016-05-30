@@ -9,6 +9,7 @@ import com.gzcjteam.shundai.utils.ToastUtil;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -31,11 +32,18 @@ public class LoginFrament extends Fragment implements OnClickListener {
 	private EditText  userName;
 	private EditText password;
 	private Handler handler = new Handler();
+	private SharedPreferences  shp;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view=inflater.inflate(R.layout.login_frament, container,false);
 		initView(view);
 		initEvent();
+		shp=getActivity().getSharedPreferences("USERCONFIG", getActivity().MODE_PRIVATE);
+		userName.setText(shp.getString("phone", ""));
+		
+		System.out.println("密码为："+shp.getString("password", ""));
+		password.setText(shp.getString("password", ""));
 		return view;
 	}
 	

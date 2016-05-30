@@ -9,12 +9,15 @@ import org.json.JSONObject;
 
 import com.gzcjteam.shundai.utils.CheckYanZhengMa;
 import com.gzcjteam.shundai.utils.MyTimerTask;
+import com.gzcjteam.shundai.utils.RequestUtils;
 import com.gzcjteam.shundai.utils.ToastUtil;
 import com.gzcjteam.shundai.utils.getYanZhengMa;
 import com.gzcjteam.shundai.LoginActivity;
 import com.gzcjteam.shundai.MainActivity;
 import com.gzcjteam.shundai.R;
 import com.gzcjteam.shundai.R.layout;
+import com.gzcjteam.shundai.bean.NetCallBack;
+import com.loopj.android.http.RequestParams;
 
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -77,6 +80,7 @@ public class ForgivePwdFrament extends Fragment implements OnClickListener {
 		return view;
 	}
 
+
 	@Override
 	public void onClick(View v) {
 		if (v == btn_findyan) {
@@ -84,12 +88,37 @@ public class ForgivePwdFrament extends Fragment implements OnClickListener {
 			if (tv_Phone.getText().toString().isEmpty()) {
 				ToastUtil.show(getActivity(), "手机号不能为空！");
 			} else {
-				btn_findyan.setText(60 + "s");
-				btn_findyan.setEnabled(false);
-				Timer time = new Timer();
-				time.schedule(new MyTimerTask(60, handler, time), 0, 1000);
-				new getYanZhengMa().FindYanZhengMa(tv_Phone.getText()
-						.toString(), getActivity());
+				String url = "http://119.29.140.85/index.php/user/check_phone";
+				RequestParams params = new RequestParams();
+				params.put("phone", tv_Phone.getText().toString());
+				RequestUtils.ClientPost(url, params, new NetCallBack() {
+
+					@Override
+					public void onMySuccess(String result) {
+						try {
+							JSONObject json = new JSONObject(result);
+							Boolean status = json.getBoolean("status");
+							String info = json.getString("info");
+							JSONObject data;
+							if (status) {
+								ToastUtil.show(getActivity(), "该手机未注册！");								
+							} else {
+								btn_findyan.setText(60 + "s");
+								btn_findyan.setEnabled(false);
+								Timer time = new Timer();
+								time.schedule(new MyTimerTask(60, handler, time), 0, 1000);
+								new getYanZhengMa().FindYanZhengMa(tv_Phone.getText()
+										.toString(), getActivity());
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+					@Override
+					public void onMyFailure(Throwable arg0) {
+						ToastUtil.show(getActivity(), "服务器错误！");
+					}
+				});			
 			}
 		} else if (v == btn_next) {
 			if (tv_Phone.getText().toString().isEmpty()) {
@@ -100,16 +129,40 @@ public class ForgivePwdFrament extends Fragment implements OnClickListener {
 				ToastUtil.show(getActivity(), "验证码不能为空！");
 				return;
 			}
-			CheckYanZhengMa yzm = new CheckYanZhengMa();
-			if (yzm.CheckYZM(tv_Phone.getText().toString(), tv_Phone.getText()
-					.toString(), getActivity())) {
-				shp = getActivity().getSharedPreferences("PHONEANDYAN",
-						getActivity().MODE_PRIVATE);
-				Editor editor = shp.edit();
-				editor.putString("phone", tv_Phone.getText().toString());
-				editor.commit();
-				((LoginActivity) getActivity()).go2Forgive();
-			}
+			String url = "http://119.29.140.85/index.php/user/valite_msg_code";
+			RequestParams params = new RequestParams();
+			params.put("phone", tv_Phone.getText().toString());
+			params.put("code", tv_Yanzhengma.getText().toString());
+			RequestUtils.ClientPost(url, params, new NetCallBack() {
+
+				@Override
+				public void onMySuccess(String result) {
+					try {
+						JSONObject json = new JSONObject(result);
+						Boolean status = json.getBoolean("status");
+						String info = json.getString("info");
+						System.out.println("状态" + status);
+						if (status) {
+							ToastUtil.show(getActivity(), info);
+							shp = getActivity().getSharedPreferences("PHONEANDYAN",
+									getActivity().MODE_PRIVATE);
+							Editor editor = shp.edit();
+							editor.putString("phone", tv_Phone.getText().toString());
+							editor.commit();
+							((LoginActivity) getActivity()).go2Forgive();
+						} else {
+							ToastUtil.show(getActivity(), info);
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+
+				@Override
+				public void onMyFailure(Throwable arg0) {
+					ToastUtil.show(getActivity(), "服务器错误！");
+				}
+			});
 		}
 	}
 

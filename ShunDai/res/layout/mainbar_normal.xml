@@ -14,7 +14,7 @@
             android:layout_width="48dp"
             android:layout_height="35dp"
             android:scaleType="center"
-            android:src="@drawable/saixuan" />
+            android:src="@drawable/shaixuan" />
 
         <TextView
             android:id="@+id/miaosu"

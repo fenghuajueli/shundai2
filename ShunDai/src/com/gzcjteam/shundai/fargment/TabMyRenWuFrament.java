@@ -34,24 +34,7 @@ public class TabMyRenWuFrament extends Fragment implements OnClickListener {
 	}
 	
 	private void initView(View view) {
-		btnSignIn = (Button) view.findViewById(R.id.btn_sign_in);
-		btnSignUp = (Button) view.findViewById(R.id.btn_sign_up);
-
-		if (currentFlag == ARG_TYPE_FIRST) {
-			btnSignIn.setVisibility(View.VISIBLE);
-			btnSignUp.setVisibility(View.VISIBLE);
-		} else {
-			btnSignIn.setVisibility(View.GONE);
-			btnSignUp.setVisibility(View.GONE);
-
-			handler.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					startActivity(new Intent(getActivity(), MainActivity.class));
-					getActivity().finish();
-				}
-			}, 1500);
-		}
+		
 	}
 
 	@Override

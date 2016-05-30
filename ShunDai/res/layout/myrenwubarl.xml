@@ -18,7 +18,7 @@
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/myrenwu_xuanzhong"
-            android:text="未完成"
+            android:text="我领取的"
             android:textColor="#000000" />
         
         <Button
@@ -27,7 +27,7 @@
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/myrenwu_weixuanzhong"
-            android:text="历史任务"
+            android:text="我发布的"
             android:textColor="#000000" />
         
 

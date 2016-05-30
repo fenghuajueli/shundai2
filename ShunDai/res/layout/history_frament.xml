@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/allrenwu"
-    android:clickable="true"
-    android:orientation="vertical" >
+    android:clickable="true">
 
     <com.gzcjteam.shundai.weight.RefreshableView
         android:id="@+id/refreshable_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="match_parent" >    
 
         <ListView
             android:id="@+id/all_renwu_listView"
@@ -18,4 +16,4 @@
         </ListView>
     </com.gzcjteam.shundai.weight.RefreshableView>
 
-</LinearLayout>
+</RelativeLayout>
