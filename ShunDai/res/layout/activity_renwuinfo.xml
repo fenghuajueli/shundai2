@@ -318,12 +318,22 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_shensu"
+            android:id="@+id/btn_cancel"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_green_selector"
+            android:text="取消任务" />
+
+        <Button
+            android:id="@+id/btn_shensu"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
             android:layout_marginBottom="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/btn_green_selector"
             android:text="申诉" />

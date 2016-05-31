@@ -155,7 +155,11 @@ public class WoFaBuRenWuFrament extends Fragment implements OnClickListener {
 					int position, long id) {
 				Intent intent = new Intent();
 				intent.setClass(getActivity(), WoFaBuInfoActivity.class);
-				intent.putExtra("task_id",renwu.get(position).getId());				
+				intent.putExtra("task_id",renwu.get(position).getId());	
+				intent.putExtra("complete_user_id",renwu.get(position).getCompleteuserid());	
+				intent.putExtra("complete_user_head_pic_url",renwu.get(position).getCompleteuserheadpicurl());	
+				intent.putExtra("complete_user_nick",renwu.get(position).getCompleteusernick());	
+				intent.putExtra("complete_user_phone",renwu.get(position).getComplete_user_phone());					
 				startActivity(intent);
 			}
 		});
@@ -293,8 +297,6 @@ public class WoFaBuRenWuFrament extends Fragment implements OnClickListener {
 			try {
 				JSONArray jsonarray = new JSONArray(
 						allJsondata.getString("data"));
-
-				System.out.println(jsonarray.length());
 				int count = jsonarray.length();
 				int i = 0;
 				while (i < count) {
@@ -306,6 +308,10 @@ public class WoFaBuRenWuFrament extends Fragment implements OnClickListener {
 					infodata.setsAddress(js.getString("receive_address"));
 					infodata.setId(js.getString("id"));
 					infodata.setSchoolName(js.getString("school_name"));
+					infodata.setComplete_user_phone(js.getString("complete_user_phone"));
+					infodata.setCompleteuserheadpicurl(js.getString("complete_user_head_pic_url"));
+					infodata.setCompleteuserid(js.getString("complete_user_id"));
+					infodata.setCompleteusernick(js.getString("complete_user_nick"));				
 					infodata.setTupianId(R.drawable.kuaidi3);
 					renwu.add(infodata); // 将新的info对象加入到信息列表中
 					i++;

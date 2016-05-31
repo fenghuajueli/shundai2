@@ -9,6 +9,78 @@ public class RenWuInfo {
 	private String id;
 	private String launch_user_id;
 	private String schoolName;
+	private String completeuserid;//领取着id
+	private String completeusernick;//领取者昵称
+	private String completeuserheadpicurl;//头像地址
+	private String complete_user_phone;//领取者手机
+	private String launchuserid;//发布者id
+	private String launchusernick;//发布者昵称
+	private String launchuserheadpicurl;//头像地址
+	private String launch_user_phone;//发布者手机
+	
+	public String getLaunchuserid() {
+		return launchuserid;
+	}
+
+	public void setLaunchuserid(String launchuserid) {
+		this.launchuserid = launchuserid;
+	}
+
+	public String getLaunchusernick() {
+		return launchusernick;
+	}
+
+	public void setLaunchusernick(String launchusernick) {
+		this.launchusernick = launchusernick;
+	}
+
+	public String getLaunchuserheadpicurl() {
+		return launchuserheadpicurl;
+	}
+
+	public void setLaunchuserheadpicurl(String launchuserheadpicurl) {
+		this.launchuserheadpicurl = launchuserheadpicurl;
+	}
+
+	public String getLaunch_user_phone() {
+		return launch_user_phone;
+	}
+
+	public void setLaunch_user_phone(String launch_user_phone) {
+		this.launch_user_phone = launch_user_phone;
+	}
+
+	public String getCompleteuserid() {
+		return completeuserid;
+	}
+
+	public void setCompleteuserid(String completeuserid) {
+		this.completeuserid = completeuserid;
+	}
+
+	public String getCompleteusernick() {
+		return completeusernick;
+	}
+
+	public void setCompleteusernick(String completeusernick) {
+		this.completeusernick = completeusernick;
+	}
+
+	public String getCompleteuserheadpicurl() {
+		return completeuserheadpicurl;
+	}
+
+	public void setCompleteuserheadpicurl(String completeuserheadpicurl) {
+		this.completeuserheadpicurl = completeuserheadpicurl;
+	}
+
+	public String getComplete_user_phone() {
+		return complete_user_phone;
+	}
+
+	public void setComplete_user_phone(String complete_user_phone) {
+		this.complete_user_phone = complete_user_phone;
+	}
 
 	public String getSchoolName() {
 		return schoolName;

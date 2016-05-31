@@ -36,9 +36,13 @@ public class WoFaBuInfoActivity extends Activity implements OnClickListener {
 	private TextView tv_lingqu_name;
 	private TextView lingqu_phone;
 	PullUpDialog dia;
-	private String launch_id="";
+	private String launch_id = "";
 	private Button btn_cancel;
 	private Button btn_shouhuo;
+	private String completeuserid;// 领取着id
+	private String completeusernick;// 领取者昵称
+	private String completeuserheadpicurl;// 头像地址
+	private String complete_user_phone;// 领取者手机
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +70,11 @@ public class WoFaBuInfoActivity extends Activity implements OnClickListener {
 		mTopBar.setTitle("任务详情");
 		Intent intent = getIntent();
 		task_id = intent.getStringExtra("task_id");
-		System.out.println(task_id);
+		completeuserid = intent.getStringExtra("complete_user_id");
+		completeusernick = intent.getStringExtra("complete_user_nick");
+		completeuserheadpicurl = intent
+				.getStringExtra("complete_user_head_pic_url");
+		complete_user_phone = intent.getStringExtra("complete_user_phone");
 		task_Info(task_id, getUserInfo.getInstance().getId());
 	}
 
@@ -91,8 +99,7 @@ public class WoFaBuInfoActivity extends Activity implements OnClickListener {
 						if (jsonarray != null) {
 							JSONObject jsono = jsonarray
 									.getJSONObject("task_detail");
-							launch_id=jsono
-									.getString("launch_user_id");
+							launch_id = jsono.getString("launch_user_id");
 							tv_launch_name.setText(jsono
 									.getString("launch_user_name"));
 							tv_renwucode.setText("任务编号："
@@ -107,10 +114,8 @@ public class WoFaBuInfoActivity extends Activity implements OnClickListener {
 									+ jsono.getString("receive_address"));
 							tv_expressinfo.setText(jsono
 									.getString("express_info"));
-							tv_lingqu_name.setText("领取人："
-									+ jsono.getString("receive_express_name"));
-							lingqu_phone.setText("手机："
-									+ jsono.getString("receive_express_phone"));
+							tv_lingqu_name.setText("领取人：" + completeusernick);
+							lingqu_phone.setText("手机：" + complete_user_phone);
 							String express_status = jsono
 									.getString("express_status");
 							switch (express_status) {
@@ -120,16 +125,17 @@ public class WoFaBuInfoActivity extends Activity implements OnClickListener {
 								btn_shensu.setEnabled(false);
 								btn_shensu.setBackgroundColor(0x99DFDFDF);
 								break;
-							case "1":								
-								btn_shouhuo.setEnabled(false);
-								btn_shouhuo.setBackgroundColor(0x99DFDFDF);
+							case "1":
 								btn_cancel.setEnabled(false);
 								btn_cancel.setBackgroundColor(0x99DFDFDF);
 								break;
 							case "2":
 								btn_cancel.setEnabled(false);
 								btn_cancel.setBackgroundColor(0x99DFDFDF);
-								btn_shouhuo.setEnabled(true);
+								btn_shouhuo.setEnabled(false);
+								btn_shouhuo.setBackgroundColor(0x99DFDFDF);
+								btn_shensu.setEnabled(false);
+								btn_shensu.setBackgroundColor(0x99DFDFDF);
 								break;
 							default:
 								break;
@@ -196,11 +202,10 @@ public class WoFaBuInfoActivity extends Activity implements OnClickListener {
 	public void querenShouJian(String ta_id, String launch_id) {
 		dia = new PullUpDialog(this, R.style.adialog, "确认收件中。。");
 		dia.show();
-		String url = "http://119.29.140.85/index.php/task/sure_pay_package";
+		String url = "http://119.29.140.85/index.php/task/receive_task";
 		RequestParams params = new RequestParams();
-		params.put("launch_user_id", launch_id);
+		params.put("complete_user_id", launch_id);
 		params.put("task_id", ta_id);
-		params.put("pay_type", "1");
 		RequestUtils.ClientPost(url, params, new NetCallBack() {
 			@Override
 			public void onMySuccess(String result) {
@@ -219,6 +224,7 @@ public class WoFaBuInfoActivity extends Activity implements OnClickListener {
 					e.printStackTrace();
 				}
 			}
+
 			@Override
 			public void onMyFailure(Throwable arg0) {
 				dia.dismiss();
@@ -243,11 +249,9 @@ public class WoFaBuInfoActivity extends Activity implements OnClickListener {
 			intent.putExtras(bundle);
 			startActivity(intent);
 		} else if (v == btn_shouhuo) {
-			//ToastUtil.show(WoFaBuInfoActivity.this, "可用");
-			querenShouJian(task_id,launch_id);
+			querenShouJian(task_id, completeuserid);
 		} else if (v == btn_cancel) {
 			cancelRenWu(task_id, getUserInfo.getInstance().getId());
-			// ToastUtil.show(WoFaBuInfoActivity.this, "可用");
 		}
 	}
 }

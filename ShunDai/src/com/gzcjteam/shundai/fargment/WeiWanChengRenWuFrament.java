@@ -159,6 +159,10 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 
 				System.out.println("任务id" + renwu.get(position).getId());
 				intent.putExtra("task_id", renwu.get(position).getId());
+				intent.putExtra("launch_user_id", renwu.get(position).getLaunchuserid());
+				intent.putExtra("launch_user_head_pic_url", renwu.get(position).getLaunchuserheadpicurl());
+				intent.putExtra("launch_user_nick", renwu.get(position).getLaunchusernick());
+				intent.putExtra("launch_user_phone", renwu.get(position).getLaunch_user_phone());
 				// 传递name参数为tinyphp
 				startActivity(intent);
 			}
@@ -308,6 +312,10 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 					infodata.setId(js.getString("id"));
 					infodata.setSchoolName(js.getString("school_name"));
 					infodata.setTupianId(R.drawable.kuaidi3);
+					infodata.setLaunch_user_phone(js.getString("launch_user_phone"));
+					infodata.setLaunchuserheadpicurl(js.getString("launch_user_head_pic_url"));
+					infodata.setLaunchuserid(js.getString("launch_user_id"));
+					infodata.setLaunchusernick(js.getString("launch_user_nick"));
 					renwu.add(infodata); // 将新的info对象加入到信息列表中
 					i++;
 				}
