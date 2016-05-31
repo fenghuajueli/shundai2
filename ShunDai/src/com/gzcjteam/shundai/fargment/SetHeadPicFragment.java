@@ -42,6 +42,10 @@ public class SetHeadPicFragment extends Fragment implements OnClickListener {
 	private static final String sendImageUrl = "http://119.29.140.85/index.php/user/upload_head";
 	private static Uri uri;
 	private static File tempFile;
+	
+	private ImageView imgPersonHead;//头像
+	          
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

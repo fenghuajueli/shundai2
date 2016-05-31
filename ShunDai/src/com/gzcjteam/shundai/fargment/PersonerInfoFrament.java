@@ -1,8 +1,14 @@
 package com.gzcjteam.shundai.fargment;
 
+import com.gzcjteam.shundai.LoginActivity;
 import com.gzcjteam.shundai.PersonalCenterActivity;
 import com.gzcjteam.shundai.R;
+import com.gzcjteam.shundai.utils.getUserInfo;
+
 import android.support.v4.app.Fragment;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +34,10 @@ public class PersonerInfoFrament extends Fragment implements OnClickListener {
 	private ImageView imgPersonShenSuNext; // 申诉下一步按钮
 	private ImageView imgPersonAboutNext;// 关于顺带下一步按钮
 
+	private Button btn_exit;// 退出
+	private ImageView imgPersonHead;// 头像
+	private String headPicUrl;
+
 	private Handler handler = new Handler();
 
 	@Override
@@ -35,10 +45,16 @@ public class PersonerInfoFrament extends Fragment implements OnClickListener {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.tabperson_frament, container,
 				false);
-
+		initData();
 		initView(view);
 
 		return view;
+	}
+
+	private void initData() {
+		headPicUrl = "http://119.29.140.85"
+				+ getUserInfo.getInstance().getHead_pic_url();
+
 	}
 
 	// 初始化界面
@@ -51,11 +67,15 @@ public class PersonerInfoFrament extends Fragment implements OnClickListener {
 				.findViewById(R.id.imgPersonShenSuNext);
 		imgPersonAboutNext = (ImageView) view
 				.findViewById(R.id.imgPersonAboutNext);
+		imgPersonHead = (ImageView) view.findViewById(R.id.imgPersonHead);
+		btn_exit = (Button) view.findViewById(R.id.btn_exit);
 
 		imgPersonInfoNext.setOnClickListener(this);
 		imgPersonRenZhenXinXiNext.setOnClickListener(this);
 		imgPersonShenSuNext.setOnClickListener(this);
 		imgPersonAboutNext.setOnClickListener(this);
+		imgPersonHead.setOnClickListener(this);
+		btn_exit.setOnClickListener(this);
 
 	}
 
@@ -86,7 +106,32 @@ public class PersonerInfoFrament extends Fragment implements OnClickListener {
 			intent4.setClass(getActivity(), PersonalCenterActivity.class);
 			startActivity(intent4);
 			break;
+		case R.id.btn_exit:
+			AlertDialog.Builder builder = new Builder(getActivity());
+			builder.setMessage("确认退出吗？");
+			builder.setTitle("提示");
+			builder.setPositiveButton("确定",
+					new DialogInterface.OnClickListener() {
 
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Intent intent = new Intent(getActivity(),
+									LoginActivity.class);
+							startActivity(intent);
+							getActivity().finish();
+						}
+					});
+			builder.setNegativeButton("取消",
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+
+						}
+					});
+			builder.create().show();
+
+			break;
 		default:
 			break;
 		}

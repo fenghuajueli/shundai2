@@ -19,6 +19,8 @@ public class PersonalCenterActivity extends FragmentActivity {
 	private FragmentManager fm;
 	private static String backstatcTag = "PERSONALCENTER";
 	private static String pageName = null;
+	
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

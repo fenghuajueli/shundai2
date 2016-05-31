@@ -186,7 +186,7 @@
                     android:id="@+id/img_shenfenzhen"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#989C9C"
+                    android:background="@drawable/addimage"
                     android:layout_below="@id/txt_shenfenzhen" />
             </RelativeLayout>
 
@@ -206,18 +206,20 @@
                     android:id="@+id/img_xueshengzhen"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#B2EFFF"
+                   android:background="@drawable/addimage"
                     android:layout_below="@id/txt_xueshengzhen" />
             </RelativeLayout>
         </LinearLayout>
 
         <Button
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="40dp"
+            android:layout_height="40dp"
             android:id="@+id/btn_renzhen_save"
             android:layout_width="match_parent"
             android:textSize="18sp"
-            android:layout_height="30dp"
-            android:background="#7CD43A"
+            android:background="#0091d2"
             android:text="提    交" />
     </LinearLayout>
 
