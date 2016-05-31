@@ -7,6 +7,7 @@ import com.gzcjteam.shundai.R;
 import com.gzcjteam.shundai.RenWuInfoActivity;
 import com.gzcjteam.shundai.bean.NetCallBack;
 import com.gzcjteam.shundai.fargment.TabAllRenWuFrament;
+import com.gzcjteam.shundai.utils.OnSureClickListener;
 import com.gzcjteam.shundai.utils.RequestUtils;
 import com.gzcjteam.shundai.utils.ToastUtil;
 import com.gzcjteam.shundai.utils.getUserInfo;
@@ -39,14 +40,17 @@ public class TiShiDialog extends Dialog implements OnClickListener {
 	private String id;
 	private Boolean isSuccess = false;
 	private Context context;
+	private OnSureClickListener mListener;
+	PullUpDialog dia;
 
 	public TiShiDialog(Context context, int theme, String kuaidigongsi,
-			String address, String task_id) {
+			String address, String task_id, OnSureClickListener listener) {
 		super(context, theme);
 		this.context = context;
 		this.id = task_id;
 		this.kuadiGongSi = kuaidigongsi;
 		this.songHuoAddress = address;
+		mListener = listener;
 		Window window = getWindow();
 		WindowManager.LayoutParams lp = window.getAttributes();
 		window.setAttributes(lp);
@@ -70,60 +74,47 @@ public class TiShiDialog extends Dialog implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if (v == btn_queding) {
-			PullUpDialog  dia=new PullUpDialog(context, R.style.adialog, "领取中。。");
+			dia = new PullUpDialog(context, R.style.adialog, "领取中。。");
 			this.dismiss();
-			dia.show();			
-			if (isLingQuSuccess(id)) {
-				dia.dismiss();
-				//跳转到任务详情界面
-				Intent  intent=new Intent();
-				intent.setClass(context, RenWuInfoActivity.class);
-				context.startActivity(intent);				
-			}else{
-				dia.dismiss();
-			}
+			dia.show();
+			String url = "http://119.29.140.85/index.php/task/start_task";
+			RequestParams params = new RequestParams();
+			params.put("task_id", id);
+			params.put("complete_user_id", getUserInfo.getInstance().getId());
+			System.out.println("task_id:" + id);
+			System.out.println("complete_user_id:"
+					+ getUserInfo.getInstance().getId());
+			RequestUtils.ClientPost(url, params, new NetCallBack() {
+				@Override
+				public void onMySuccess(String result) {
+					try {
+						JSONObject json = new JSONObject(result);
+						Boolean status = json.getBoolean("status");
+						String info = json.getString("info");
+						JSONObject data;
+						if (status) {
+							ToastUtil.show(context, info);
+							mListener.tiaoZhuanInfo("");
+							dia.dismiss();
+						} else {
+							dia.dismiss();
+							ToastUtil.show(context, info);
+						}
+					} catch (JSONException e) {
+						dia.dismiss();
+						e.printStackTrace();
+					}
+				}
+
+				@Override
+				public void onMyFailure(Throwable arg0) {
+					dia.dismiss();
+					ToastUtil.show(context, "领取任务失败！");
+				}
+			});
 			// this.dismiss();
 		} else if (v == btn_cancel) {
 			this.dismiss();
 		}
 	}
-
-	public Boolean isLingQuSuccess(String id) {
-		String url = "http://119.29.140.85/index.php/task/start_task";
-		RequestParams params = new RequestParams();
-		params.put("task_id", id);
-		params.put("complete_user_id", getUserInfo.getInstance().getId());
-		System.out.println("task_id:" + id);
-		System.out.println("complete_user_id:"
-				+ getUserInfo.getInstance().getId());
-		RequestUtils.ClientPost(url, params, new NetCallBack() {
-			@Override
-			public void onMySuccess(String result) {
-				try {
-					JSONObject json = new JSONObject(result);
-					Boolean status = json.getBoolean("status");
-					String info = json.getString("info");
-					JSONObject data;
-					if (status) {
-						isSuccess = true;
-						ToastUtil.show(context, info);
-					} else {
-						isSuccess = false;
-						ToastUtil.show(context, info);
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-
-			@Override
-			public void onMyFailure(Throwable arg0) {
-				ToastUtil.show(context, "领取任务失败！");
-				isSuccess = false;
-			}
-		});
-		return isSuccess;
-
-	}
-
 }

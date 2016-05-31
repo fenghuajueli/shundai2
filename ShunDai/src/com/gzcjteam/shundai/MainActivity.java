@@ -45,14 +45,6 @@ public class MainActivity extends FragmentActivity implements
 	private TabIndicatorView tabContentIndicator;// 全部任务
 	private TabIndicatorView tabDiscoverIndicator;// 我的任务
 	private TabIndicatorView tabMeIndicator;// 个人中心
-	private static String[] school_spindata = { "贵州财经大学花溪校区", "贵州师范大学花溪校区",
-			"贵州医科大学花溪校区", "城市学院", "贵州轻工业职业学校", "贵州民族大学花溪校区" };
-	private static String[] kuaidi_spindata = { "顺丰快递", "圆通快递", "申通", "中通快递",
-			"天天快递", "韵达快递" };
-	private Spinner school_spinner;
-	private Spinner kuaidi_spinner;
-	private ArrayAdapter<String> school_adapter;
-	private ArrayAdapter<String> kuaidi_adapter;
 	private FragmentManager fm;
 	private static String WeiWanTag = "weiwancheng";
 	private static String HistoryTag = "history";
@@ -253,25 +245,14 @@ public class MainActivity extends FragmentActivity implements
 			gotoWeiWan();
 		} else if (v == myrenwuBar.getHistoryView()) {
 			gotoHistory();
-		} else if (v == mTopBar.getBackView()) {
-			// 初始化spinner
-			tanChuDialog();
-		}
-
+		} 
 	}
-
-	/**
-	 * 弹出对话框
-	 */
-	public void tanChuDialog() {
-		school_adapter = new ArrayAdapter<String>(this,
-				R.layout.spinner_item_layout, school_spindata);
-		kuaidi_adapter = new ArrayAdapter<String>(this,
-				R.layout.spinner_item_layout, kuaidi_spindata);
-		// 创建一个AlertDialog对话框
-		ShaiXuanDialog dia = new ShaiXuanDialog(MainActivity.this,
-				R.style.adialog, school_adapter, kuaidi_adapter);
-		dia.show();
+	
+	public  void  gotoShaiXuan(){		
+		ToastUtil.show(MainActivity.this, "调用成功");
+		
 	}
+	
 
+	
 }

@@ -11,13 +11,18 @@ import com.gzcjteam.shundai.MainActivity;
 import com.gzcjteam.shundai.LoginActivity;
 import com.gzcjteam.shundai.R;
 import com.gzcjteam.shundai.RenWuInfo;
+import com.gzcjteam.shundai.RenWuInfoActivity;
 import com.gzcjteam.shundai.bean.NetCallBack;
+import com.gzcjteam.shundai.utils.OnSureClickListener;
 import com.gzcjteam.shundai.utils.RenWu_Adapter;
 import com.gzcjteam.shundai.utils.RequestUtils;
 import com.gzcjteam.shundai.utils.ToastUtil;
 import com.gzcjteam.shundai.utils.getUserInfo;
+import com.gzcjteam.shundai.weight.MainMyRenwuTopBar;
+import com.gzcjteam.shundai.weight.MainTopBar;
 import com.gzcjteam.shundai.weight.PullUpDialog;
 import com.gzcjteam.shundai.weight.RefreshableView;
+import com.gzcjteam.shundai.weight.ShaiXuanDialog;
 import com.gzcjteam.shundai.weight.TiShiDialog;
 import com.gzcjteam.shundai.weight.RefreshableView.PullToRefreshListener;
 import com.loopj.android.http.RequestParams;
@@ -38,12 +43,15 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 
@@ -64,18 +72,37 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 	private static final int CHANGEDATA = 0;
 	protected static final int PULLREFASHSUCCESS = 3;
 	protected static final int PULLREFASHFAILED = 4;
+	protected static final int REFASHWANBI = 5;
 	MainActivity main = (MainActivity) getActivity();
 	private JSONObject allJsondata;
 	private int stop_position; // 记录滚动停止的位置
 	Boolean isSuccess = false;
 	private boolean isLastRow = false;// 判断是不是最后一行
-
 	private int dangQianPage = 1;
+	private int dangQianShaiXuan = 1;
+	private MainTopBar mTopBar;
+	private Boolean isQingKong = false;
+	private static String[] school_spindata = { "全部学校", "贵州财经大学花溪校区",
+			"贵州师范大学花溪校区", "贵州医科大学花溪校区", "城市学院", "贵州轻工业职业学校", "贵州民族大学花溪校区" };
+	private static String[] kuaidi_spindata = { "全部快递", "顺丰快递", "圆通快递", "申通快递",
+			"中通快递", "天天快递", "韵达快递" };
+	private Spinner school_spinner;
+	private Spinner kuaidi_spinner;
+	private ArrayAdapter<String> school_adapter;
+	private ArrayAdapter<String> kuaidi_adapter;
+	private View view;
+	private String SCHOOLCODE = "";
+	private String KUAIDICODE = "";
+	private String SCHOOLCODE1 = "";
+	private String KUAIDICODE2 = "";
+	RenWuInfo info;
+
+	private Boolean isDiaLogRefash = false;
+
 	private Handler handler = new Handler() {
 
 		@Override
 		public void handleMessage(Message msg) {
-			// TODO Auto-generated method stub
 			super.handleMessage(msg);
 
 			switch (msg.what) {
@@ -91,7 +118,9 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 			case PULLREFASHSUCCESS:
 				ToastUtil.show(getActivity(), "加载成功！");
 				break;
-
+			case REFASHWANBI:
+				ToastUtil.show(getActivity(), "数据全部加载完毕！");
+				break;
 			case CHANGEDATA:
 				renwu_adapter.mList = renwu;
 				renwu_adapter.notifyDataSetChanged();
@@ -105,7 +134,11 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.taball_frament, container, false);
+		view = inflater.inflate(R.layout.taball_frament, container, false);
+		mTopBar = (MainTopBar) getActivity().findViewById(
+				R.id.activity_main_top_bar);
+		mTopBar.setOnBackListener(this);
+		mTopBar.setBackVisibility(true);
 		allrenwu = (LinearLayout) view.findViewById(R.id.allrenwu);
 		initView(view);
 		return view;
@@ -129,11 +162,24 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 					PullUpDialog dia = new PullUpDialog(getActivity(),
 							R.style.adialog, "正在加载更多数据中。。");
 					dia.show();
-					if (requestPullUpData()) {
-						dia.dismiss();
+					if (isDiaLogRefash) {
+						dangQianPage = 2;
+						isDiaLogRefash = false;
+						if (requestPullUpData(SCHOOLCODE, KUAIDICODE,
+								dangQianShaiXuan)) {
+							dia.dismiss();
+						} else {
+							dia.dismiss();
+						}
 					} else {
-						dia.dismiss();
+						if (requestPullUpData(SCHOOLCODE, KUAIDICODE,
+								dangQianPage)) {
+							dia.dismiss();
+						} else {
+							dia.dismiss();
+						}
 					}
+
 				}
 			}
 
@@ -151,11 +197,28 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				RenWuInfo info = renwu.get(position);
-				ToastUtil.show(getActivity(), info.getId());
+				info = renwu.get(position);
 				TiShiDialog dia = new TiShiDialog(getActivity(),
 						R.style.tishidialog, info.getKuaidiName(), info
-								.getsAddress(), info.getId());
+								.getsAddress(), info.getId(),
+						new OnSureClickListener() {
+
+							@Override
+							public void tiaoZhuanInfo(String renwu_id) {
+								// 领取成功后进入任务详情界面
+								Intent intent = new Intent();
+								intent.setClass(getActivity(),
+										RenWuInfoActivity.class);
+								intent.putExtra("task_id",info.getId());
+								startActivity(intent);
+							}
+
+							@Override
+							public void refalshData(String sCode,
+									String kuaiCode, Boolean qingKong) {
+
+							}
+						});
 				dia.show();
 			}
 		});
@@ -164,14 +227,58 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 		refreshableView.setOnRefreshListener(new PullToRefreshListener() {
 			@Override
 			public void onRefresh() {
-				requestData();
+				System.out.println(SCHOOLCODE + "" + KUAIDICODE);
+				if (isDiaLogRefash) {
+					dangQianPage = 2;
+					isDiaLogRefash = false;
+					requestData(SCHOOLCODE, KUAIDICODE, dangQianShaiXuan);
+				} else {
+					requestData(SCHOOLCODE, KUAIDICODE, dangQianPage);
+				}
+
 			}
 		}, 0);
 
 	}
 
+	/**
+	 * 弹出对话框
+	 */
+	public void tanChuDialog() {
+		school_adapter = new ArrayAdapter<String>(getActivity(),
+				R.layout.spinner_item_layout, school_spindata);
+		kuaidi_adapter = new ArrayAdapter<String>(getActivity(),
+				R.layout.spinner_item_layout, kuaidi_spindata);
+		// 创建一个AlertDialog对话框
+		ShaiXuanDialog dia = new ShaiXuanDialog(getActivity(), R.style.adialog,
+				school_adapter, kuaidi_adapter, new OnSureClickListener() {
+
+					@Override
+					public void refalshData(String sCode, String kuaiCode,
+							Boolean qingKong) {
+						// 在这里筛选刷新数据
+						// refreshableView.fRefreshing();
+						SCHOOLCODE1 = sCode;
+						KUAIDICODE2 = kuaiCode;
+						isQingKong = true;
+						isDiaLogRefash = true;
+						requestData(sCode, kuaiCode, 1);
+					}
+
+					@Override
+					public void tiaoZhuanInfo(String renwu_id) {
+
+					}
+				});
+		dia.show();
+	}
+
 	@Override
 	public void onClick(View v) {
+		if (v == mTopBar.getBackView()) {
+			// 初始化spinner
+			tanChuDialog();
+		}
 
 	}
 
@@ -184,12 +291,20 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 	 * @return 上拉加载更多数据
 	 * 
 	 */
-	public Boolean requestPullUpData() {
+	public Boolean requestPullUpData(String schoolCode, String kuaidiCode,
+			int page) {
 		String url = "http://119.29.140.85/index.php/task/task_list";
 		RequestParams params = new RequestParams();
+		if (!schoolCode.isEmpty()) {
+			System.out.println(schoolCode.isEmpty());
+			params.put("school_code", schoolCode);
+		}
+		if (!kuaidiCode.isEmpty()) {
+			params.put("express_code", kuaidiCode);
+		}
 		params.put("status", "0");
-		params.put("page", dangQianPage+"");
-		params.put("page_size","8");
+		params.put("page", page + "");
+		params.put("page_size", "1");
 		RequestUtils.ClientPost(url, params, new NetCallBack() {
 			@Override
 			public void onMySuccess(String result) {
@@ -197,21 +312,33 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 					JSONObject json = new JSONObject(result);
 					Boolean status = json.getBoolean("status");
 					String info = json.getString("info");
-					JSONObject data;
+					JSONArray jsonarray = new JSONArray(json.getString("data"));
 					if (status) {
-						Message msg = new Message();
-						msg.what = PULLREFASHSUCCESS;
-						handler.sendMessage(msg);
-						refreshableView.finishRefreshing();
 						allJsondata = json;
-						dangQianPage++;
-						changeListData();
-						isSuccess = true;
+						if (jsonarray.length() > 0) {
+							Message msg = new Message();
+							msg.what = PULLREFASHSUCCESS;
+							handler.sendMessage(msg);
+							SCHOOLCODE = SCHOOLCODE1;
+							KUAIDICODE = KUAIDICODE2;
+							if (!isQingKong) {
+								dangQianPage++;
+								dangQianShaiXuan++;
+								changeListData();
+							} else {
+								isQingKong = false;
+								dangQianPage = 2;
+								dangQianShaiXuan = 2;
+								shaixuanListData();
+							}
+							isSuccess = true;
+						} else {
+							ToastUtil.show(getActivity(), "数据全部加载完毕！");
+						}
 					} else {
 						Message msg = new Message();
 						msg.what = PULLREFASHFAILED;
 						handler.sendMessage(msg);
-						refreshableView.finishRefreshing();
 						allJsondata = null;
 					}
 				} catch (JSONException e) {
@@ -224,7 +351,6 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 				Message msg = new Message();
 				msg.what = REFASHFAILED;
 				handler.sendMessage(msg);
-				refreshableView.finishRefreshing();
 			}
 		});
 
@@ -234,12 +360,23 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 	/**
 	 * 请求全部任务的数据方法
 	 */
-	public Boolean requestData() {
+	public Boolean requestData(String schoolCode, String kuaidiCode, int page) {
 		String url = "http://119.29.140.85/index.php/task/task_list";
 		RequestParams params = new RequestParams();
+		if (!schoolCode.isEmpty()) {
+			System.out.println(schoolCode);
+			params.put("school_code", schoolCode);
+		}
+		if (!kuaidiCode.isEmpty()) {
+			System.out.println(kuaidiCode);
+			params.put("express_code", kuaidiCode);
+		}
+		System.out.println("当前页：" + dangQianPage);
+		System.out.println("当前页：" + dangQianShaiXuan);
 		params.put("status", "0");
-		params.put("page", dangQianPage+"");
-		params.put("page_size","8");
+		params.put("page", page + "");
+		System.out.println("传入的page" + page);
+		params.put("page_size", "1");
 		RequestUtils.ClientPost(url, params, new NetCallBack() {
 			@Override
 			public void onMySuccess(String result) {
@@ -247,16 +384,38 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 					JSONObject json = new JSONObject(result);
 					Boolean status = json.getBoolean("status");
 					String info = json.getString("info");
-					JSONObject data;
+					JSONArray jsonarray = new JSONArray(json.getString("data"));
 					if (status) {
-						Message msg = new Message();
-						msg.what = REFASHSUCCESS;
-						handler.sendMessage(msg);
-						refreshableView.finishRefreshing();
 						allJsondata = json;
-						dangQianPage++;
-						changeListData();
-						isSuccess = true;
+						refreshableView.finishRefreshing();
+						if (jsonarray.length() > 0) {
+							Message msg = new Message();
+							msg.what = REFASHSUCCESS;
+							handler.sendMessage(msg);
+							SCHOOLCODE = SCHOOLCODE1;
+							KUAIDICODE = KUAIDICODE2;
+							if (!isQingKong) {
+								dangQianPage++;
+								dangQianShaiXuan++;
+								changeListData();
+							} else {
+								isQingKong = false;
+								dangQianShaiXuan = 2;
+								shaixuanListData();
+							}
+							isSuccess = true;
+						} else {
+							if (isDiaLogRefash) {
+								shaixuanListData();
+								Message msg = new Message();
+								msg.what = REFASHWANBI;
+								handler.sendMessage(msg);
+							}
+							Message msg = new Message();
+							msg.what = REFASHWANBI;
+							handler.sendMessage(msg);
+						}
+
 					} else {
 						Message msg = new Message();
 						msg.what = REFASHFAILED;
@@ -281,8 +440,70 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 		return isSuccess;
 	}
 
-	public void changeListData() {
-		// renwu.clear();
+	/**
+	 * 筛选更新数据方法
+	 */
+	public Boolean shaixuanData() {
+		dangQianPage = 1;
+		String url = "http://119.29.140.85/index.php/task/task_list";
+		RequestParams params = new RequestParams();
+		params.put("status", "0");
+		params.put("school_code", "1");
+		params.put("page", dangQianShaiXuan + "");
+		params.put("page_size", "2");
+		RequestUtils.ClientPost(url, params, new NetCallBack() {
+			@Override
+			public void onMySuccess(String result) {
+				try {
+					JSONObject json = new JSONObject(result);
+					Boolean status = json.getBoolean("status");
+					String info = json.getString("info");
+					JSONArray jsonarray = new JSONArray(json.getString("data"));
+					if (status) {
+						refreshableView.finishRefreshing();
+						if (jsonarray.length() > 0) {
+							Message msg = new Message();
+							msg.what = REFASHSUCCESS;
+							handler.sendMessage(msg);
+							allJsondata = json;
+							dangQianShaiXuan++;
+							shaixuanListData();
+							isSuccess = true;
+						} else {
+							Message msg = new Message();
+							msg.what = REFASHWANBI;
+							handler.sendMessage(msg);
+						}
+
+					} else {
+						Message msg = new Message();
+						msg.what = REFASHFAILED;
+						handler.sendMessage(msg);
+						refreshableView.finishRefreshing();
+						allJsondata = null;
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void onMyFailure(Throwable arg0) {
+				Message msg = new Message();
+				msg.what = REFASHFAILED;
+				handler.sendMessage(msg);
+				refreshableView.finishRefreshing();
+			}
+		});
+
+		return isSuccess;
+	}
+
+	/**
+	 * 筛选更新数据的方法
+	 */
+	public void shaixuanListData() {
+		renwu.clear();
 		if (allJsondata != null) {
 			try {
 				JSONArray jsonarray = new JSONArray(
@@ -314,47 +535,35 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 	}
 
 	/**
-	 * 领取任务方法
+	 * 普通更新数据方法
 	 */
-	public void receiveRenWu(String id) {
-		String url = "http://119.29.140.85/index.php/task/start_task";
-		RequestParams params = new RequestParams();
-		params.put("task_id", id);
-		params.put("complete_user_id", getUserInfo.getInstance().getId());
-		RequestUtils.ClientPost(url, null, new NetCallBack() {
-			@Override
-			public void onMySuccess(String result) {
-				try {
-					JSONObject json = new JSONObject(result);
-					Boolean status = json.getBoolean("status");
-					String info = json.getString("info");
-					JSONObject data;
-					if (status) {
-						Message msg = new Message();
-						msg.what = PULLREFASHSUCCESS;
-						handler.sendMessage(msg);
-						// refreshableView.finishRefreshing();
-						allJsondata = json;
-					} else {
-						Message msg = new Message();
-						msg.what = PULLREFASHFAILED;
-						handler.sendMessage(msg);
-						// refreshableView.finishRefreshing();
-						allJsondata = null;
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
+	public void changeListData() {
+		// renwu.clear();
+		if (allJsondata != null) {
+			try {
+				JSONArray jsonarray = new JSONArray(
+						allJsondata.getString("data"));
+				int count = jsonarray.length();
+				int i = 0;
+				while (i < count) {
+					JSONObject js = jsonarray.getJSONObject(i);
+					RenWuInfo infodata = new RenWuInfo();
+					infodata.setTime(js.getString("launch_time"));
+					infodata.setKuaidiName(js.getString("express_name"));
+					infodata.setsAddress(js.getString("receive_address"));
+					infodata.setId(js.getString("id"));
+					infodata.setTupianId(R.drawable.kuaidi3);
+					renwu.add(infodata); // 将新的info对象加入到信息列表中
+					i++;
 				}
-			}
-
-			@Override
-			public void onMyFailure(Throwable arg0) {
+				System.out.println(renwu.size());
 				Message msg = new Message();
-				msg.what = REFASHFAILED;
+				msg.what = CHANGEDATA;
 				handler.sendMessage(msg);
-				refreshableView.finishRefreshing();
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-		});
+		}
 
 	}
 

@@ -7,6 +7,7 @@ public class RenWuInfo {
 	private String sAddress;//收货地址
 	private int  tupianId;//图片资源id
 	private String id;
+	private String launch_user_id;
 	
 	public String getId() {
 		return id;

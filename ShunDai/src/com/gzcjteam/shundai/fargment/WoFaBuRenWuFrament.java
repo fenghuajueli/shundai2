@@ -12,6 +12,7 @@ import com.gzcjteam.shundai.LoginActivity;
 import com.gzcjteam.shundai.R;
 import com.gzcjteam.shundai.RenWuInfo;
 import com.gzcjteam.shundai.RenWuInfoActivity;
+import com.gzcjteam.shundai.WoFaBuInfoActivity;
 import com.gzcjteam.shundai.bean.NetCallBack;
 import com.gzcjteam.shundai.fargment.TabAllRenWuFrament.ViewHolder;
 import com.gzcjteam.shundai.utils.RenWu_Adapter;
@@ -47,8 +48,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class WoFaBuRenWuFrament extends Fragment implements
-		OnClickListener {
+public class WoFaBuRenWuFrament extends Fragment implements OnClickListener {
 
 	public final static String ARG_KEY = "ARG";
 
@@ -66,13 +66,13 @@ public class WoFaBuRenWuFrament extends Fragment implements
 	private final static int REFASHFAILED = 1;
 	private final static int REFASHSUCCESS = 2;
 	private static final int CHANGEDATA = 0;
+	protected static final int REFASHWANBI = 5;
 	private JSONObject allJsondata;
 	private int stop_position; // 记录滚动停止的位置
 	Boolean isSuccess = false;
 	private boolean isLastRow = false;// 判断是不是最后一行
-    private  int  dangQianPage=1;
-	
-	
+	private int dangQianPage = 1;
+
 	private Handler handler = new Handler() {
 
 		@Override
@@ -93,6 +93,9 @@ public class WoFaBuRenWuFrament extends Fragment implements
 			case PULLREFASHSUCCESS:
 				ToastUtil.show(getActivity(), "加载成功！");
 				break;
+			case REFASHWANBI:
+				ToastUtil.show(getActivity(), "数据全部加载完毕！");
+				break;
 			case CHANGEDATA:
 				renwu_adapter.mList = renwu;
 				renwu_adapter.notifyDataSetChanged();
@@ -106,7 +109,8 @@ public class WoFaBuRenWuFrament extends Fragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.history_frament, container, false);
+		View view = inflater
+				.inflate(R.layout.history_frament, container, false);
 		initView(view);
 		// initEvent();
 		return view;
@@ -114,7 +118,7 @@ public class WoFaBuRenWuFrament extends Fragment implements
 
 	private void initView(View view) {
 		listview = (ListView) view.findViewById(R.id.all_renwu_listView);
-		//setInfo();
+		// setInfo();
 		renwu_adapter = new RenWu_Adapter1(renwu, getActivity());
 		listview.setAdapter(renwu_adapter);
 		listview.setOnScrollListener(new OnScrollListener() {
@@ -125,7 +129,7 @@ public class WoFaBuRenWuFrament extends Fragment implements
 						&& scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
 					stop_position = listview.getFirstVisiblePosition();
 					PullUpDialog dia = new PullUpDialog(getActivity(),
-							R.style.adialog,"正在加载更多数据中。。");
+							R.style.adialog, "正在加载更多数据中。。");
 					dia.show();
 					if (requestPullUpData()) {
 						dia.dismiss();
@@ -143,14 +147,15 @@ public class WoFaBuRenWuFrament extends Fragment implements
 				}
 			}
 		});
-		
+
 		listview.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Intent  intent=new Intent();
-				intent.setClass(getActivity(), RenWuInfoActivity.class);
+				Intent intent = new Intent();
+				intent.setClass(getActivity(), WoFaBuInfoActivity.class);
+				intent.putExtra("task_id",renwu.get(position).getId());				
 				startActivity(intent);
 			}
 		});
@@ -178,8 +183,8 @@ public class WoFaBuRenWuFrament extends Fragment implements
 		String url = "http://119.29.140.85/index.php/task/list_launch";
 		RequestParams params = new RequestParams();
 		params.put("launch_user_id", getUserInfo.getInstance().getId());
-		params.put("page", dangQianPage+"");
-		params.put("page_size","8");
+		params.put("page", dangQianPage + "");
+		params.put("page_size", "8");
 		RequestUtils.ClientPost(url, params, new NetCallBack() {
 			@Override
 			public void onMySuccess(String result) {
@@ -187,16 +192,20 @@ public class WoFaBuRenWuFrament extends Fragment implements
 					JSONObject json = new JSONObject(result);
 					Boolean status = json.getBoolean("status");
 					String info = json.getString("info");
-					JSONObject data;
+					JSONArray jsonarray = new JSONArray(json.getString("data"));
 					if (status) {
-						Message msg = new Message();
-						msg.what = PULLREFASHSUCCESS;
-						handler.sendMessage(msg);
-						refreshableView.finishRefreshing();
-						allJsondata = json;
-						dangQianPage++;
-						changeListData();
-						isSuccess = true;
+						if (jsonarray.length() > 0) {
+							Message msg = new Message();
+							msg.what = PULLREFASHSUCCESS;
+							handler.sendMessage(msg);
+							refreshableView.finishRefreshing();
+							allJsondata = json;
+							dangQianPage++;
+							changeListData();
+							isSuccess = true;
+						} else {
+							ToastUtil.show(getActivity(), "数据全部加载完毕！");
+						}
 					} else {
 						Message msg = new Message();
 						msg.what = PULLREFASHFAILED;
@@ -220,7 +229,7 @@ public class WoFaBuRenWuFrament extends Fragment implements
 
 		return isSuccess;
 	}
-	
+
 	/**
 	 * 请求全部任务的数据方法
 	 */
@@ -228,8 +237,8 @@ public class WoFaBuRenWuFrament extends Fragment implements
 		String url = "http://119.29.140.85/index.php/task/list_launch";
 		RequestParams params = new RequestParams();
 		params.put("launch_user_id", getUserInfo.getInstance().getId());
-		params.put("page", dangQianPage+"");
-		params.put("page_size","8");
+		params.put("page", dangQianPage + "");
+		params.put("page_size", "8");
 		RequestUtils.ClientPost(url, params, new NetCallBack() {
 			@Override
 			public void onMySuccess(String result) {
@@ -237,16 +246,23 @@ public class WoFaBuRenWuFrament extends Fragment implements
 					JSONObject json = new JSONObject(result);
 					Boolean status = json.getBoolean("status");
 					String info = json.getString("info");
-					JSONObject data;
+					JSONArray jsonarray = new JSONArray(json.getString("data"));
 					if (status) {
-						Message msg = new Message();
-						msg.what = REFASHSUCCESS;
-						handler.sendMessage(msg);
 						refreshableView.finishRefreshing();
-						allJsondata = json;
-						changeListData();
-						dangQianPage++;
-						isSuccess = true;
+						if (jsonarray.length() > 0) {
+							Message msg = new Message();
+							msg.what = REFASHSUCCESS;
+							handler.sendMessage(msg);
+							allJsondata = json;
+							changeListData();
+						
+							dangQianPage++;
+							isSuccess = true;
+						} else {
+							Message msg = new Message();
+							msg.what = REFASHWANBI;
+							handler.sendMessage(msg);
+						}
 					} else {
 						Message msg = new Message();
 						msg.what = REFASHFAILED;
@@ -277,7 +293,7 @@ public class WoFaBuRenWuFrament extends Fragment implements
 			try {
 				JSONArray jsonarray = new JSONArray(
 						allJsondata.getString("data"));
-				
+
 				System.out.println(jsonarray.length());
 				int count = jsonarray.length();
 				int i = 0;
@@ -288,6 +304,7 @@ public class WoFaBuRenWuFrament extends Fragment implements
 					infodata.setTime(js.getString("launch_time"));
 					infodata.setKuaidiName(js.getString("express_name"));
 					infodata.setsAddress(js.getString("receive_address"));
+					infodata.setId(js.getString("id"));
 					infodata.setTupianId(R.drawable.kuaidi3);
 					renwu.add(infodata); // 将新的info对象加入到信息列表中
 					i++;
@@ -307,7 +324,6 @@ public class WoFaBuRenWuFrament extends Fragment implements
 		btnSignIn.setOnClickListener(this);
 		btnSignUp.setOnClickListener(this);
 	}
-
 
 	class RenWu_Adapter1 extends BaseAdapter {
 		public View[] itemViews;

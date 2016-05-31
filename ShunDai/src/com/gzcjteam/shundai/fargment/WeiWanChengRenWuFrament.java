@@ -18,10 +18,11 @@ import com.gzcjteam.shundai.utils.RenWu_Adapter;
 import com.gzcjteam.shundai.utils.RequestUtils;
 import com.gzcjteam.shundai.utils.ToastUtil;
 import com.gzcjteam.shundai.utils.getUserInfo;
+import com.gzcjteam.shundai.weight.LQRefreshableView;
 import com.gzcjteam.shundai.weight.PullUpDialog;
 import com.gzcjteam.shundai.weight.RefreshableView;
 import com.gzcjteam.shundai.weight.TiShiDialog;
-import com.gzcjteam.shundai.weight.RefreshableView.PullToRefreshListener;
+import com.gzcjteam.shundai.weight.LQRefreshableView.PullToRefreshListener;
 import com.loopj.android.http.RequestParams;
 
 import android.support.v4.app.Fragment;
@@ -60,18 +61,22 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 	private ListView listview;
 	private List<RenWuInfo> renwu = new ArrayList<RenWuInfo>();
 	RenWu_Adapter1 renwu_adapter;
-	RefreshableView refreshableView;
+	LQRefreshableView refreshableView;
 	protected static final int PULLREFASHSUCCESS = 3;
 	protected static final int PULLREFASHFAILED = 4;
 	private final static int REFASHFAILED = 1;
 	private final static int REFASHSUCCESS = 2;
 	private static final int CHANGEDATA = 0;
+	protected static final int REFASHWANBI = 5;
 	private JSONObject allJsondata;
 	private int stop_position; // 记录滚动停止的位置
 	Boolean isSuccess = false;
 	private boolean isLastRow = false;// 判断是不是最后一行
 	private int dangQianPage = 1;
-
+   
+	
+	
+	
 	private Handler handler = new Handler() {
 
 		@Override
@@ -91,6 +96,9 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 				break;
 			case PULLREFASHSUCCESS:
 				ToastUtil.show(getActivity(), "加载成功！");
+				break;
+			case REFASHWANBI:
+				ToastUtil.show(getActivity(), "数据全部加载完毕！");
 				break;
 			case CHANGEDATA:
 				renwu_adapter.mList = renwu;
@@ -112,7 +120,7 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 	}
 
 	private void initView(View view) {
-		listview = (ListView) view.findViewById(R.id.all_renwu_listView);
+		listview = (ListView) view.findViewById(R.id.lq_renwu_listView);
 		// setInfo();
 		renwu_adapter = new RenWu_Adapter1(renwu, getActivity());
 		listview.setAdapter(renwu_adapter);
@@ -151,10 +159,14 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 					int position, long id) {
 				Intent intent = new Intent();
 				intent.setClass(getActivity(), RenWuInfoActivity.class);
+				
+				System.out.println("任务id"+renwu.get(position).getId());
+				intent.putExtra("task_id",renwu.get(position).getId());
+				// 传递name参数为tinyphp
 				startActivity(intent);
 			}
 		});
-		refreshableView = (RefreshableView) view
+		refreshableView = (LQRefreshableView) view
 				.findViewById(R.id.refreshable_view);
 		refreshableView.setOnRefreshListener(new PullToRefreshListener() {
 			@Override
@@ -179,6 +191,7 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 		RequestParams params = new RequestParams();
 		params.put("complete_user_id", getUserInfo.getInstance().getId());
 		params.put("page", dangQianPage + "");
+		System.out.println("当前页："+dangQianPage);
 		params.put("page_size", "8");
 		RequestUtils.ClientPost(url, params, new NetCallBack() {
 			@Override
@@ -187,21 +200,23 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 					JSONObject json = new JSONObject(result);
 					Boolean status = json.getBoolean("status");
 					String info = json.getString("info");
-					JSONObject data;
+					JSONArray jsonarray = new JSONArray(json.getString("data"));
 					if (status) {
-						Message msg = new Message();
-						msg.what = PULLREFASHSUCCESS;
-						handler.sendMessage(msg);
-						refreshableView.finishRefreshing();
 						allJsondata = json;
-						dangQianPage++;
-						changeListData();
-						isSuccess = true;
+						if (jsonarray.length() > 0) {
+							Message msg = new Message();
+							msg.what = PULLREFASHSUCCESS;
+							handler.sendMessage(msg);						
+							dangQianPage++;
+							changeListData();
+							isSuccess = true;
+						} else {
+							ToastUtil.show(getActivity(), "数据全部加载完毕！");
+						}
 					} else {
 						Message msg = new Message();
 						msg.what = PULLREFASHFAILED;
 						handler.sendMessage(msg);
-						refreshableView.finishRefreshing();
 						allJsondata = null;
 					}
 				} catch (JSONException e) {
@@ -229,6 +244,7 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 		RequestParams params = new RequestParams();
 		params.put("complete_user_id", getUserInfo.getInstance().getId());
 		params.put("page", dangQianPage + "");
+		System.out.println("当前页："+dangQianPage);
 		params.put("page_size", "8");
 		RequestUtils.ClientPost(url, params, new NetCallBack() {
 			@Override
@@ -237,16 +253,23 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 					JSONObject json = new JSONObject(result);
 					Boolean status = json.getBoolean("status");
 					String info = json.getString("info");
-					JSONObject data;
+					JSONArray jsonarray = new JSONArray(json.getString("data"));
 					if (status) {
-						Message msg = new Message();
-						msg.what = REFASHSUCCESS;
-						handler.sendMessage(msg);
 						refreshableView.finishRefreshing();
-						allJsondata = json;
-						dangQianPage++;
-						changeListData();
-						isSuccess = true;
+						if (jsonarray.length() > 0) {
+							Message msg = new Message();
+							msg.what = REFASHSUCCESS;
+							handler.sendMessage(msg);
+							allJsondata = json;
+							dangQianPage++;
+							changeListData();
+
+							isSuccess = true;
+						} else {
+							Message msg = new Message();
+							msg.what = REFASHWANBI;
+							handler.sendMessage(msg);
+						}
 					} else {
 						Message msg = new Message();
 						msg.what = REFASHFAILED;
@@ -285,6 +308,7 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 					infodata.setTime(js.getString("launch_time"));
 					infodata.setKuaidiName(js.getString("express_name"));
 					infodata.setsAddress(js.getString("receive_address"));
+					infodata.setId(js.getString("id"));
 					infodata.setTupianId(R.drawable.kuaidi3);
 					renwu.add(infodata); // 将新的info对象加入到信息列表中
 					i++;
@@ -304,7 +328,6 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 		btnSignIn.setOnClickListener(this);
 		btnSignUp.setOnClickListener(this);
 	}
-
 
 	class RenWu_Adapter1 extends BaseAdapter {
 		public View[] itemViews;

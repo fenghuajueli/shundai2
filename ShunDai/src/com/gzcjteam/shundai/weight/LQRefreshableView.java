@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.view.View.OnTouchListener;
 import android.view.animation.RotateAnimation;
 
-public class RefreshableView extends LinearLayout implements OnTouchListener {
+public class LQRefreshableView extends LinearLayout implements OnTouchListener {
 	/**
 	 * 下拉状态
 	 */
@@ -176,7 +176,7 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
 	 * @param context
 	 * @param attrs
 	 */
-	public RefreshableView(Context context, AttributeSet attrs) {
+	public LQRefreshableView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		preferences = PreferenceManager.getDefaultSharedPreferences(context);
 		header = LayoutInflater.from(context).inflate(R.layout.pull_to_refresh,

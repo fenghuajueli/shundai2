@@ -181,7 +181,7 @@ public class SetHeadPicFragment extends Fragment implements OnClickListener {
 		RequestParams params = new RequestParams();
 		try {
 			params.put("image", tempFile);
-			params.put("id", new getUserInfo().getId());
+			params.put("id", getUserInfo.getInstance().getId());
 			RequestUtils.ClientPost(sendImageUrl, params, new NetCallBack() {
 
 				@Override

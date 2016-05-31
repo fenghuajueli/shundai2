@@ -13,7 +13,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -43,6 +42,10 @@
         <activity
             android:name=".PersonalCenterActivity"
             android:label="@string/title_activity_personal_center" >
+        </activity>
+        <activity
+            android:name=".WoFaBuInfoActivity"
+            android:label="@string/title_activity_wo_fa_bu_info" >
         </activity>
     </application>
 

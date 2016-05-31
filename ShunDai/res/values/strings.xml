@@ -18,5 +18,6 @@
     <string name="loginzhuangtai">登录中。。</string>
     <string name="title_activity_shen_su">ShenSuActivity</string>
     <string name="shensucontent">提示：如若对任务存在疑问，可首先联系任务领取人员，协商解决。如若无法解决或任务领取人无法处理可提交如下申诉。顺带客户将在2个工作日对您的申诉进行处理</string>
+    <string name="title_activity_wo_fa_bu_info">WoFaBuInfoActivity</string>
 
 </resources>
