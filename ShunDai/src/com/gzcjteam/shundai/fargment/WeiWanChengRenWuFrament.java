@@ -73,10 +73,7 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 	Boolean isSuccess = false;
 	private boolean isLastRow = false;// 判断是不是最后一行
 	private int dangQianPage = 1;
-   
-	
-	
-	
+
 	private Handler handler = new Handler() {
 
 		@Override
@@ -159,9 +156,9 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 					int position, long id) {
 				Intent intent = new Intent();
 				intent.setClass(getActivity(), RenWuInfoActivity.class);
-				
-				System.out.println("任务id"+renwu.get(position).getId());
-				intent.putExtra("task_id",renwu.get(position).getId());
+
+				System.out.println("任务id" + renwu.get(position).getId());
+				intent.putExtra("task_id", renwu.get(position).getId());
 				// 传递name参数为tinyphp
 				startActivity(intent);
 			}
@@ -191,7 +188,7 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 		RequestParams params = new RequestParams();
 		params.put("complete_user_id", getUserInfo.getInstance().getId());
 		params.put("page", dangQianPage + "");
-		System.out.println("当前页："+dangQianPage);
+		System.out.println("当前页：" + dangQianPage);
 		params.put("page_size", "8");
 		RequestUtils.ClientPost(url, params, new NetCallBack() {
 			@Override
@@ -206,7 +203,7 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 						if (jsonarray.length() > 0) {
 							Message msg = new Message();
 							msg.what = PULLREFASHSUCCESS;
-							handler.sendMessage(msg);						
+							handler.sendMessage(msg);
 							dangQianPage++;
 							changeListData();
 							isSuccess = true;
@@ -244,7 +241,7 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 		RequestParams params = new RequestParams();
 		params.put("complete_user_id", getUserInfo.getInstance().getId());
 		params.put("page", dangQianPage + "");
-		System.out.println("当前页："+dangQianPage);
+		System.out.println("当前页：" + dangQianPage);
 		params.put("page_size", "8");
 		RequestUtils.ClientPost(url, params, new NetCallBack() {
 			@Override
@@ -309,6 +306,7 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 					infodata.setKuaidiName(js.getString("express_name"));
 					infodata.setsAddress(js.getString("receive_address"));
 					infodata.setId(js.getString("id"));
+					infodata.setSchoolName(js.getString("school_name"));
 					infodata.setTupianId(R.drawable.kuaidi3);
 					renwu.add(infodata); // 将新的info对象加入到信息列表中
 					i++;
@@ -377,6 +375,8 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 						.findViewById(R.id.saddress);
 				holder.time = (TextView) convertView
 						.findViewById(R.id.sendtime);
+				holder.schoolName = (TextView) convertView
+						.findViewById(R.id.schoolname);
 				// 将设置好的布局保存到缓存中，并将其设置在Tag里，以便后面方便取出Tag
 				convertView.setTag(holder);
 			} else {
@@ -389,6 +389,8 @@ public class WeiWanChengRenWuFrament extends Fragment implements
 			holder.time.setText((String) mList.get(position).getTime());
 			holder.songhuodizhi.setText((String) mList.get(position)
 					.getsAddress());
+			holder.schoolName.setText((String) mList.get(position)
+					.getSchoolName());
 			return convertView;
 		}
 	}

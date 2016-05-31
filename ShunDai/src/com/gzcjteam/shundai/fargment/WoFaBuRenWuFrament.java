@@ -305,6 +305,7 @@ public class WoFaBuRenWuFrament extends Fragment implements OnClickListener {
 					infodata.setKuaidiName(js.getString("express_name"));
 					infodata.setsAddress(js.getString("receive_address"));
 					infodata.setId(js.getString("id"));
+					infodata.setSchoolName(js.getString("school_name"));
 					infodata.setTupianId(R.drawable.kuaidi3);
 					renwu.add(infodata); // 将新的info对象加入到信息列表中
 					i++;
@@ -373,6 +374,7 @@ public class WoFaBuRenWuFrament extends Fragment implements OnClickListener {
 						.findViewById(R.id.saddress);
 				holder.time = (TextView) convertView
 						.findViewById(R.id.sendtime);
+				holder.schoolName=(TextView) convertView.findViewById(R.id.schoolname);
 				// 将设置好的布局保存到缓存中，并将其设置在Tag里，以便后面方便取出Tag
 				convertView.setTag(holder);
 			} else {
@@ -385,6 +387,8 @@ public class WoFaBuRenWuFrament extends Fragment implements OnClickListener {
 			holder.time.setText((String) mList.get(position).getTime());
 			holder.songhuodizhi.setText((String) mList.get(position)
 					.getsAddress());
+			holder.schoolName.setText((String) mList.get(position)
+					.getSchoolName());
 			return convertView;
 		}
 	}
