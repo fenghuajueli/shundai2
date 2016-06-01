@@ -6,11 +6,19 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.interfaces.RSAKey;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.gzcjteam.shundai.R;
 import com.gzcjteam.shundai.bean.NetCallBack;
+import com.gzcjteam.shundai.utils.BitmapListener;
 import com.gzcjteam.shundai.utils.RequestUtils;
 import com.gzcjteam.shundai.utils.getUserInfo;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.BinaryHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import android.R.string;
@@ -42,10 +50,15 @@ public class SetHeadPicFragment extends Fragment implements OnClickListener {
 	private static final String sendImageUrl = "http://119.29.140.85/index.php/user/upload_head";
 	private static Uri uri;
 	private static File tempFile;
-	
-	private ImageView imgPersonHead;//头像
-	          
-	
+	private BitmapListener bitmapListener;
+	private static Bitmap returnBitmap;
+
+	private String headPicUrl = "http://119.29.140.85"
+			+ getUserInfo.getInstance().getHead_pic_url();
+
+	public SetHeadPicFragment(BitmapListener bitmapListener) {
+		this.bitmapListener = bitmapListener;
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,6 +77,19 @@ public class SetHeadPicFragment extends Fragment implements OnClickListener {
 		img_setheadpic.setOnClickListener(this);
 		llPicCamera.setOnClickListener(this);
 		llPicZoom.setOnClickListener(this);
+
+		// 设置头像
+		AsyncHttpClient client = new AsyncHttpClient();
+		String[] allowedContentTypes = new String[] { "image/png", "image/jpeg" };
+		client.get(headPicUrl, new BinaryHttpResponseHandler(
+				allowedContentTypes) {
+			@Override
+			public void onSuccess(byte[] fileData) {
+				Bitmap bitmap = BitmapFactory.decodeByteArray(fileData, 0,
+						fileData.length);
+				img_setheadpic.setImageBitmap(bitmap);
+			}
+		});
 	}
 
 	@Override
@@ -118,8 +144,9 @@ public class SetHeadPicFragment extends Fragment implements OnClickListener {
 			}
 			Bitmap bm = extras.getParcelable("data");
 			img_setheadpic.setImageBitmap(bm);
+			returnBitmap = bm;
 			// sendImage(bm);
-			sendImageToService(sendImageUrl, uri);// 发送头像
+			sendImageToService(sendImageUrl, tempFile);// 发送头像
 		}
 
 		// Toast.makeText(getActivity(), "sss", 1).show();
@@ -181,7 +208,7 @@ public class SetHeadPicFragment extends Fragment implements OnClickListener {
 	}
 
 	// 向服务器发送头像图片 存在Id为空的问题
-	private void sendImageToService(String sendimageurl2, Uri uri2) {
+	private void sendImageToService(String sendimageurl2, File file) {
 		RequestParams params = new RequestParams();
 		try {
 			params.put("image", tempFile);
@@ -190,8 +217,22 @@ public class SetHeadPicFragment extends Fragment implements OnClickListener {
 
 				@Override
 				public void onMySuccess(String result) {
-					// Log.e("Test","头像上传成功"+result);
-					Toast.makeText(getActivity(), "头像上传成功" + result, 1).show();
+					try {
+						JSONObject json = new JSONObject(result);
+						boolean status = json.getBoolean("status");
+						JSONObject data;
+						String newHeadPicUrl;
+						if (status) {
+							data = json.getJSONObject("data");
+							newHeadPicUrl = data.getString("head_path");
+							getUserInfo.getInstance().setHead_pic_url( // 更新头像图片地址
+									newHeadPicUrl);
+							bitmapListener.bitMapCallBack(returnBitmap);// 回调bitmap
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+
 				}
 
 				@Override
@@ -203,5 +244,11 @@ public class SetHeadPicFragment extends Fragment implements OnClickListener {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+	//加入backstatus时调用
+	@Override
+	public void onPause() {
+		super.onPause();
 	}
 }

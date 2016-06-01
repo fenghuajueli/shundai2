@@ -238,7 +238,6 @@ public class TabFaBuRenWuFrament extends Fragment implements OnClickListener,
 					try {
 						json = new JSONObject(result);
 						boolean status = json.getBoolean("status");
-						Toast.makeText(getActivity(), "" + status, 1).show();
 						if (status) {
 							Message msg2 = new Message();
 							msg2.what = 2;

@@ -25,12 +25,14 @@
                 android:src="@drawable/back" />
 
             <TextView
+                android:id="@+id/txt_mt_centent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/img_PersonalInfo_back"
                 android:text="个人中心"
-                android:textSize="12sp" />
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,7 +40,20 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="个人信息"
+                android:textColor="#FFFFFF"
                 android:textSize="16sp" />
+
+            <Button
+                 android:textSize="16sp" 
+                android:id="@+id/btn_my_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="#0076D8"
+                android:text="保存"
+                android:textColor="#FFFFFF" />
         </RelativeLayout>
 
         <LinearLayout
@@ -82,8 +97,8 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/imgPersonalheadnext"
                     android:layout_marginLeft="20dp"
+                    android:layout_toLeftOf="@id/imgPersonalheadnext"
                     android:src="@drawable/person_head" />
             </RelativeLayout>
 
@@ -119,12 +134,13 @@
                     android:src="@drawable/petit_next" />
 
                 <TextView
+                    android:id="@+id/txt_my_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_toLeftOf="@id/imgPersonalName"
-                    android:text="张晓晓"
+                    android:text=""
                     android:textSize="16sp" />
             </RelativeLayout>
 
@@ -160,12 +176,13 @@
                     android:src="@drawable/petit_next" />
 
                 <TextView
+                    android:id="@+id/txt_my_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_toLeftOf="@id/imgPersonalPhone"
-                    android:text="18585453465"
+                    android:text=""
                     android:textSize="16sp" />
             </RelativeLayout>
 
@@ -201,12 +218,13 @@
                     android:src="@drawable/petit_next" />
 
                 <TextView
+                    android:id="@+id/txt_my_sex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_toLeftOf="@id/imgPersonalSex"
-                    android:text="女"
+                    android:text=""
                     android:textSize="16sp" />
             </RelativeLayout>
 
@@ -242,12 +260,13 @@
                     android:src="@drawable/petit_next" />
 
                 <TextView
+                    android:id="@+id/txt_my_school"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_toLeftOf="@id/imgPersonalSchool"
-                    android:text="贵州财经大学"
+                    android:text=""
                     android:textSize="16sp" />
             </RelativeLayout>
             <!-- 地址管理 -->
@@ -282,12 +301,13 @@
                     android:src="@drawable/petit_next" />
 
                 <TextView
+                    android:id="@+id/txt_my_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_toLeftOf="@id/imgPersonalRoom"
-                    android:text="玉兰苑三栋365寝室"
+                    android:text=""
                     android:textSize="16sp" />
             </RelativeLayout>
 
@@ -323,12 +343,13 @@
                     android:src="@drawable/petit_next" />
 
                 <TextView
+                    android:id="@+id/txt_my_log"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_toLeftOf="@id/imgPersonalSay"
-                    android:text="顺带在手，快递无忧"
+                    android:text=""
                     android:textSize="16sp" />
             </RelativeLayout>
             <!-- 邮箱 -->
@@ -363,12 +384,13 @@
                     android:src="@drawable/petit_next" />
 
                 <TextView
+                    android:id="@+id/txt_my_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_toLeftOf="@id/imgPersonalEmail"
-                    android:text="766792555@qq.com"
+                    android:text=""
                     android:textSize="16sp" />
             </RelativeLayout>
             <!-- QQ -->
@@ -403,12 +425,13 @@
                     android:src="@drawable/petit_next" />
 
                 <TextView
+                    android:id="@+id/txt_my_QQ"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_toLeftOf="@id/imgPersonalQQ"
-                    android:text="766792555"
+                    android:text=""
                     android:textSize="16sp" />
             </RelativeLayout>
 

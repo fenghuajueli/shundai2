@@ -1,9 +1,13 @@
 package com.gzcjteam.shundai.fargment;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import com.gzcjteam.shundai.R;
+import com.gzcjteam.shundai.utils.DataCallBack;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,20 +29,25 @@ public class CommenInfoEditFragment extends Fragment implements OnClickListener 
 	private String hintContent;
 	private static Context context;
 	private TextView my_commen_edit_tab;// tab文字
-	private TextView my_commen_edittext;// hint
+	private TextView my_commen_edittext;// 输入框
 	private Button my_commen_exit_save;// 保存
 	private ImageView img_commenpageback;// 返回上一步按钮
-	private Spinner my_commen_spinner;
-
+	private Spinner my_commen_spinner;// 选择框
 	private List<String> list = new ArrayList<>();
 	private ArrayAdapter<String> adapter;
-
 	private static String PAGE_TAG = null;
 
-	public CommenInfoEditFragment(String tabName, String hintContent) {
+	private String returnText;
+	private String returnTag;
+
+	private DataCallBack dataCallBack;
+
+	public CommenInfoEditFragment(String tabName, String hintContent,
+			DataCallBack dataCallBack) {
 		super();
 		this.tabName = tabName;
 		this.hintContent = hintContent;
+		this.dataCallBack = dataCallBack;
 	}
 
 	@Override
@@ -47,7 +56,6 @@ public class CommenInfoEditFragment extends Fragment implements OnClickListener 
 		View view = inflater.inflate(R.layout.my_personal_commen_fragment,
 				container, false);
 		PAGE_TAG = getArguments().getString("param");
-		Toast.makeText(getActivity(), PAGE_TAG, 1).show();
 
 		initView(view);
 		return view;
@@ -55,9 +63,13 @@ public class CommenInfoEditFragment extends Fragment implements OnClickListener 
 
 	private void initData() {
 		if (PAGE_TAG.equals("SCHOOL")) {
-			list.add("贵州财经大学");
-			list.add("贵州师范法学");
-			list.add("贵州医科大学");
+			list.add("贵州财经大学(花溪校区)");
+			list.add("贵州医科大学(花溪校区)");
+			list.add("贵州师范大学(花溪校区)");
+			list.add("贵州城市学院(花溪校区)");
+			list.add("贵州轻工职业技术学院");
+			list.add("贵州民族大学(花溪校区)");
+
 		} else if (PAGE_TAG.equals("SEX")) {
 			list.add("男");
 			list.add("女");
@@ -109,6 +121,8 @@ public class CommenInfoEditFragment extends Fragment implements OnClickListener 
 			break;
 		case R.id.my_commen_exit_save:
 			saveDataRequest(PAGE_TAG);
+			getActivity().onBackPressed();
+			dataCallBack.retrunEditData(returnTag, returnText);
 			break;
 		default:
 			break;
@@ -118,13 +132,15 @@ public class CommenInfoEditFragment extends Fragment implements OnClickListener 
 	// 发送网络请求
 	private void saveDataRequest(String AGE_TAG_LOG) {
 		if (AGE_TAG_LOG != null && !AGE_TAG_LOG.equals("")) {
-			if (AGE_TAG_LOG.equals("NAME")) {
-
-			} else if (AGE_TAG_LOG.equals("PHONE")) {
-
+			if (AGE_TAG_LOG.equals("SCHOOL") || AGE_TAG_LOG.equals("SEX")) {
+				returnText = (String) my_commen_spinner.getSelectedItem();
+				returnTag = AGE_TAG_LOG;
+			} else {
+				returnText = my_commen_edittext.getText().toString();
+				returnTag = AGE_TAG_LOG;
 			}
 		} else {
-			Toast.makeText(getActivity(), "页面跳转错误 请检查源代码！", 1).show();
+			Toast.makeText(getActivity(), "页面跳转码错误 请检查源代码！", 1).show();
 		}
 
 	}

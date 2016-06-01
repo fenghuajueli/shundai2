@@ -45,7 +45,7 @@ public class PersonalCenterActivity extends FragmentActivity {
 			// transaction.addToBackStack(backstatcTag);
 			transaction.commit();
 		} else if (pageName.equals("MyRenZhenInfo") && pageName != null) {
-			fragment = new MyRenZhenInfoFragment();
+			fragment = new MyRenZhenInfoFragment(this);
 			FragmentTransaction transaction = fm.beginTransaction();
 			transaction.add(R.id.fm_personal_center, fragment);
 			transaction.commit();

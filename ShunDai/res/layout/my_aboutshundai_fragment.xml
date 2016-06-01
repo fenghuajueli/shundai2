@@ -19,12 +19,14 @@
             android:src="@drawable/back" />
 
         <TextView
+            android:id="@+id/txt_about_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/img_PersonalABoutSD_back"
             android:text="个人中心"
-            android:textSize="12sp" />
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,7 +34,8 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="关于顺带"
-            android:textSize="16sp" />
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -43,11 +46,11 @@
         android:gravity="center" >
 
         <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:background="#EAD183" />
+            android:background="@drawable/shundai" />
     </RelativeLayout>
 
     <LinearLayout
@@ -73,7 +76,16 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="检查更新" />
+                android:text="检查更新"
+                android:textSize="16dp" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/petit_next" />
         </RelativeLayout>
 
         <View
@@ -92,7 +104,16 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="清除缓存" />
+                android:text="清除缓存"
+                android:textSize="16dp" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/petit_next" />
         </RelativeLayout>
 
         <View
@@ -111,7 +132,16 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="意见反馈" />
+                android:text="联系我们"
+                android:textSize="16dp" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/petit_next" />
         </RelativeLayout>
 
         <View
