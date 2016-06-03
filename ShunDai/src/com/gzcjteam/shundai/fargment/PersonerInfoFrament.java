@@ -3,9 +3,11 @@ package com.gzcjteam.shundai.fargment;
 import com.gzcjteam.shundai.LoginActivity;
 import com.gzcjteam.shundai.PersonalCenterActivity;
 import com.gzcjteam.shundai.R;
+import com.gzcjteam.shundai.utils.CircleTransform;
 import com.gzcjteam.shundai.utils.getUserInfo;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BinaryHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 import android.support.v4.app.Fragment;
 import android.app.AlertDialog;
@@ -23,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class PersonerInfoFrament extends Fragment implements OnClickListener {
 
@@ -55,9 +58,10 @@ public class PersonerInfoFrament extends Fragment implements OnClickListener {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.tabperson_frament, container,
 				false);
+
 		initData();
 		initView(view);
-
+		// Toast.makeText(getActivity(), "fragmentOnCreateView", 1).show();
 		return view;
 	}
 
@@ -97,18 +101,9 @@ public class PersonerInfoFrament extends Fragment implements OnClickListener {
 		person_grup_shensu.setOnClickListener(this);
 		person_grup_about.setOnClickListener(this);
 
-		// 设置头像
-		AsyncHttpClient client = new AsyncHttpClient();
-		String[] allowedContentTypes = new String[] { "image/png", "image/jpeg" };
-		client.get(headPicUrl, new BinaryHttpResponseHandler(
-				allowedContentTypes) {
-			@Override
-			public void onSuccess(byte[] fileData) {
-				Bitmap bitmap = BitmapFactory.decodeByteArray(fileData, 0,
-						fileData.length);
-				imgPersonHead.setImageBitmap(bitmap);
-			}
-		});
+		// 使用Picasso加载缓存头像头像
+		Picasso.with(getActivity()).load(headPicUrl).error(R.drawable.shundai)
+				.resize(100, 100).centerCrop().into(imgPersonHead);
 
 	}
 
@@ -199,4 +194,15 @@ public class PersonerInfoFrament extends Fragment implements OnClickListener {
 			break;
 		}
 	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		Picasso.with(getActivity())
+				.load("http://119.29.140.85"
+						+ getUserInfo.getInstance().getHead_pic_url())
+				.error(R.drawable.shundai).resize(100, 100).centerCrop()
+				.into(imgPersonHead);
+	}
+
 }

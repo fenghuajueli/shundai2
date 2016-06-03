@@ -63,4 +63,6 @@ public class PersonalCenterActivity extends FragmentActivity {
 			Toast.makeText(this, "系统错误，请检查源代码！", 1).show();
 		}
 	}
+	
+	
 }

@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import com.gzcjteam.shundai.R;
 import com.gzcjteam.shundai.bean.NetCallBack;
 import com.gzcjteam.shundai.utils.BitmapListener;
+import com.gzcjteam.shundai.utils.CircleTransform;
 import com.gzcjteam.shundai.utils.DataCallBack;
 import com.gzcjteam.shundai.utils.RequestUtils;
 import com.gzcjteam.shundai.utils.ToastUtil;
@@ -16,6 +17,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.squareup.picasso.Picasso;
 
 import android.R.bool;
 import android.R.integer;
@@ -163,17 +165,21 @@ public class MyInfoFragment extends Fragment implements OnClickListener {
 		txtPhone.setText(getUserInfo.getInstance().getPhone());
 
 		// 设置头像
-		AsyncHttpClient client = new AsyncHttpClient();
-		String[] allowedContentTypes = new String[] { "image/png", "image/jpeg" };
-		client.get(headPicUrl, new BinaryHttpResponseHandler(
-				allowedContentTypes) {
-			@Override
-			public void onSuccess(byte[] fileData) {
-				Bitmap bitmap = BitmapFactory.decodeByteArray(fileData, 0,
-						fileData.length);
-				img_change_head_pic.setImageBitmap(bitmap);
-			}
-		});
+		// AsyncHttpClient client = new AsyncHttpClient();
+		// String[] allowedContentTypes = new String[] { "image/png",
+		// "image/jpeg" };
+		// client.get(headPicUrl, new BinaryHttpResponseHandler(
+		// allowedContentTypes) {
+		// @Override
+		// public void onSuccess(byte[] fileData) {
+		// Bitmap bitmap = BitmapFactory.decodeByteArray(fileData, 0,
+		// fileData.length);
+		// img_change_head_pic.setImageBitmap(bitmap);
+		// }
+		// });
+
+		Picasso.with(getActivity()).load(headPicUrl).error(R.drawable.shundai)
+				.resize(100, 100).centerCrop().into(img_change_head_pic);
 	}
 
 	@Override
@@ -309,7 +315,7 @@ public class MyInfoFragment extends Fragment implements OnClickListener {
 								if (status) {
 									Toast.makeText(getActivity(), "用户信息更新成功",
 											Toast.LENGTH_SHORT).show();
-								}else {
+								} else {
 									Toast.makeText(getActivity(), "用户信息更新失败！",
 											Toast.LENGTH_SHORT).show();
 								}
@@ -347,10 +353,8 @@ public class MyInfoFragment extends Fragment implements OnClickListener {
 						} else if (MTAG.equals("PHONE")) {
 							txtPhone.setText(text);
 						} else if (MTAG.equals("SEX")) {
-							Toast.makeText(context, MTAG + text, 1).show();
 							txtSex.setText(text);
 						} else if (MTAG.equals("SCHOOL")) {
-							Toast.makeText(context, MTAG + text, 1).show();
 							txtSchool.setText(text);
 						} else if (MTAG.equals("ADDRESS")) {
 							txtAddress.setText(text);

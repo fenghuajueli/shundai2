@@ -12,8 +12,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -24,7 +26,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CommenInfoEditFragment extends Fragment implements OnClickListener {
+public class CommenInfoEditFragment extends Fragment implements
+		OnClickListener, OnTouchListener {
 	private String tabName;
 	private String hintContent;
 	private static Context context;
@@ -58,6 +61,7 @@ public class CommenInfoEditFragment extends Fragment implements OnClickListener 
 		PAGE_TAG = getArguments().getString("param");
 
 		initView(view);
+		view.setOnTouchListener(this);
 		return view;
 	}
 
@@ -143,6 +147,11 @@ public class CommenInfoEditFragment extends Fragment implements OnClickListener 
 			Toast.makeText(getActivity(), "页面跳转码错误 请检查源代码！", 1).show();
 		}
 
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		return true;
 	}
 
 }
