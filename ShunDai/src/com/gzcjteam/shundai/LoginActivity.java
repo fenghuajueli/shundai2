@@ -15,6 +15,8 @@ import com.gzcjteam.shundai.utils.getUserInfo;
 import com.gzcjteam.shundai.weight.NormalTopBar;
 import com.gzcjteam.shundai.weight.PullUpDialog;
 import com.loopj.android.http.RequestParams;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.UiError;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -307,5 +309,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 			}
 		}
 	}
+	
+	
 
 }

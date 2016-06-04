@@ -22,10 +22,10 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginRight="30dp"
-            android:inputType="number"
             android:background="@drawable/shape"
-            android:hint="手机号" 
-            android:text="18585436594"/>
+            android:hint="手机号"
+            android:inputType="number"
+            android:text="18585436594" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,10 +45,10 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginRight="30dp"
-            android:inputType="textPassword"
             android:background="@drawable/shape"
-            android:text="123456"
-            android:hint="请输入密码" />
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:text="123456" />
     </LinearLayout>
 
     <Button
@@ -87,5 +87,22 @@
             android:text="忘记密码"
             android:textColor="#000000" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:gravity="left|center_vertical"
+        android:text="一键登录" />
+
+    <ImageView
+        android:id="@+id/qqlogin"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/qq" />
 
 </LinearLayout>

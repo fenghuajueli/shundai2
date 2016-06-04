@@ -72,6 +72,7 @@ public class WoFaBuRenWuFrament extends Fragment implements OnClickListener {
 	Boolean isSuccess = false;
 	private boolean isLastRow = false;// 判断是不是最后一行
 	private int dangQianPage = 1;
+	private Boolean isQingkong = false;
 
 	private Handler handler = new Handler() {
 
@@ -97,8 +98,7 @@ public class WoFaBuRenWuFrament extends Fragment implements OnClickListener {
 				ToastUtil.show(getActivity(), "数据全部加载完毕！");
 				break;
 			case CHANGEDATA:
-				renwu_adapter.mList = renwu;
-				renwu_adapter.notifyDataSetChanged();
+				renwu_adapter.refresh(renwu);
 				break;
 			default:
 				break;
@@ -114,6 +114,24 @@ public class WoFaBuRenWuFrament extends Fragment implements OnClickListener {
 		initView(view);
 		// initEvent();
 		return view;
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (resultCode) {
+		case 0:
+			// 刷新列表
+			ToastUtil.show(getActivity(), "调用成功");
+			dangQianPage = 1;
+			renwu.clear();
+			requestData();
+			break;
+
+		default:
+			break;
+		}
+
 	}
 
 	private void initView(View view) {
@@ -155,14 +173,20 @@ public class WoFaBuRenWuFrament extends Fragment implements OnClickListener {
 					int position, long id) {
 				Intent intent = new Intent();
 				intent.setClass(getActivity(), WoFaBuInfoActivity.class);
-				intent.putExtra("task_id",renwu.get(position).getId());	
-				intent.putExtra("complete_user_id",renwu.get(position).getCompleteuserid());	
-				intent.putExtra("complete_user_head_pic_url",renwu.get(position).getCompleteuserheadpicurl());	
-				intent.putExtra("complete_user_nick",renwu.get(position).getCompleteusernick());	
-				intent.putExtra("complete_user_phone",renwu.get(position).getComplete_user_phone());					
-				startActivity(intent);
+				intent.putExtra("task_id", renwu.get(position).getId());
+				intent.putExtra("complete_user_id", renwu.get(position)
+						.getCompleteuserid());
+				intent.putExtra("complete_user_head_pic_url",
+						renwu.get(position).getCompleteuserheadpicurl());
+				intent.putExtra("complete_user_nick", renwu.get(position)
+						.getCompleteusernick());
+				intent.putExtra("complete_user_phone", renwu.get(position)
+						.getComplete_user_phone());
+				startActivityForResult(intent, 0);
+				// startActivity(intent);
 			}
 		});
+
 		refreshableView = (RefreshableView) view
 				.findViewById(R.id.refreshable_view);
 		refreshableView.setOnRefreshListener(new PullToRefreshListener() {
@@ -259,7 +283,7 @@ public class WoFaBuRenWuFrament extends Fragment implements OnClickListener {
 							handler.sendMessage(msg);
 							allJsondata = json;
 							changeListData();
-						
+
 							dangQianPage++;
 							isSuccess = true;
 						} else {
@@ -308,15 +332,17 @@ public class WoFaBuRenWuFrament extends Fragment implements OnClickListener {
 					infodata.setsAddress(js.getString("receive_address"));
 					infodata.setId(js.getString("id"));
 					infodata.setSchoolName(js.getString("school_name"));
-					infodata.setComplete_user_phone(js.getString("complete_user_phone"));
-					infodata.setCompleteuserheadpicurl(js.getString("complete_user_head_pic_url"));
+					infodata.setComplete_user_phone(js
+							.getString("complete_user_phone"));
+					infodata.setCompleteuserheadpicurl(js
+							.getString("complete_user_head_pic_url"));
 					infodata.setCompleteuserid(js.getString("complete_user_id"));
-					infodata.setCompleteusernick(js.getString("complete_user_nick"));				
+					infodata.setCompleteusernick(js
+							.getString("complete_user_nick"));
 					infodata.setTupianId(R.drawable.kuaidi3);
 					renwu.add(infodata); // 将新的info对象加入到信息列表中
 					i++;
 				}
-				System.out.println(renwu.size());
 				Message msg = new Message();
 				msg.what = CHANGEDATA;
 				handler.sendMessage(msg);
@@ -347,6 +373,7 @@ public class WoFaBuRenWuFrament extends Fragment implements OnClickListener {
 
 		public void refresh(List<RenWuInfo> list) {
 			mList = list;
+			this.notifyDataSetChanged();
 		}
 
 		@Override
@@ -380,7 +407,8 @@ public class WoFaBuRenWuFrament extends Fragment implements OnClickListener {
 						.findViewById(R.id.saddress);
 				holder.time = (TextView) convertView
 						.findViewById(R.id.sendtime);
-				holder.schoolName=(TextView) convertView.findViewById(R.id.schoolname);
+				holder.schoolName = (TextView) convertView
+						.findViewById(R.id.schoolname);
 				// 将设置好的布局保存到缓存中，并将其设置在Tag里，以便后面方便取出Tag
 				convertView.setTag(holder);
 			} else {

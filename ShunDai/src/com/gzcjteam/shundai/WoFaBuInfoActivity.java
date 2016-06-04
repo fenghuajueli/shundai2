@@ -39,10 +39,12 @@ public class WoFaBuInfoActivity extends Activity implements OnClickListener {
 	private String launch_id = "";
 	private Button btn_cancel;
 	private Button btn_shouhuo;
-	private String completeuserid;// 领取着id
-	private String completeusernick;// 领取者昵称
-	private String completeuserheadpicurl;// 头像地址
-	private String complete_user_phone;// 领取者手机
+	private String completeuserid = "";// 领取着id
+	private String completeusernick = "";// 领取者昵称
+	private String completeuserheadpicurl = "";// 头像地址
+	private String complete_user_phone = "";// 领取者手机
+	private Intent intent;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +70,26 @@ public class WoFaBuInfoActivity extends Activity implements OnClickListener {
 		mTopBar.setOnActionListener(WoFaBuInfoActivity.this);
 		mTopBar.setBackVisibility(true);
 		mTopBar.setTitle("任务详情");
-		Intent intent = getIntent();
+		intent = getIntent();
 		task_id = intent.getStringExtra("task_id");
-		completeuserid = intent.getStringExtra("complete_user_id");
-		completeusernick = intent.getStringExtra("complete_user_nick");
-		completeuserheadpicurl = intent
-				.getStringExtra("complete_user_head_pic_url");
-		complete_user_phone = intent.getStringExtra("complete_user_phone");
+		System.out
+				.println("当前长度："
+						+ intent.getStringExtra("complete_user_id").toString()
+								.length());
+		if (intent.getStringExtra("complete_user_id").toString().length() > 0) {
+			completeuserid = intent.getStringExtra("complete_user_id");
+		}
+		if (intent.getStringExtra("complete_user_nick").toString().length() > 0) {
+			completeusernick = intent.getStringExtra("complete_user_nick");
+		}
+		if (intent.getStringExtra("complete_user_head_pic_url").toString()
+				.length() > 0) {
+			completeuserheadpicurl = intent
+					.getStringExtra("complete_user_head_pic_url");
+		}
+		if (intent.getStringExtra("complete_user_phone").toString().length() > 0) {
+			complete_user_phone = intent.getStringExtra("complete_user_phone");
+		}
 		task_Info(task_id, getUserInfo.getInstance().getId());
 	}
 
@@ -114,8 +129,21 @@ public class WoFaBuInfoActivity extends Activity implements OnClickListener {
 									+ jsono.getString("receive_address"));
 							tv_expressinfo.setText(jsono
 									.getString("express_info"));
-							tv_lingqu_name.setText("领取人：" + completeusernick);
-							lingqu_phone.setText("手机：" + complete_user_phone);
+
+							System.out.println("当前值" + completeusernick
+									+ completeusernick.isEmpty());
+							if (completeusernick.length() > 0) {
+								tv_lingqu_name.setText("领取人：暂时无人领取");
+							} else {
+								tv_lingqu_name.setText("领取人："
+										+ completeusernick);
+							}
+							if (complete_user_phone.length() > 0) {
+								lingqu_phone.setText("手机：暂无手机信息");
+							} else {
+								lingqu_phone.setText("手机："
+										+ complete_user_phone);
+							}
 							String express_status = jsono
 									.getString("express_status");
 							switch (express_status) {
@@ -167,9 +195,9 @@ public class WoFaBuInfoActivity extends Activity implements OnClickListener {
 	public void cancelRenWu(String ta_id, String user_id) {
 		dia = new PullUpDialog(this, R.style.adialog, "任务取消中。。");
 		dia.show();
-		String url = "http://119.29.140.85/index.php/task/cancel_task";
+		String url = "http://119.29.140.85/index.php/task/delete_task";
 		RequestParams params = new RequestParams();
-		params.put("complete_user_id", user_id);
+		params.put("user_id", user_id);
 		params.put("task_id", ta_id);
 		RequestUtils.ClientPost(url, params, new NetCallBack() {
 			@Override
@@ -180,10 +208,12 @@ public class WoFaBuInfoActivity extends Activity implements OnClickListener {
 					String info = json.getString("info");
 					if (status) {
 						dia.dismiss();
-						ToastUtil.show(WoFaBuInfoActivity.this, "任务取消成功！");
+						ToastUtil.show(WoFaBuInfoActivity.this, "任务删除成功！");
+						setResult(0, intent); // intent为A传来的带有Bundle的intent，当然也可以自己定义新的Bundle
+						finish();
 					} else {
 						dia.dismiss();
-						ToastUtil.show(WoFaBuInfoActivity.this, "任务取消失败！");
+						ToastUtil.show(WoFaBuInfoActivity.this, "任务删除失败！");
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -193,7 +223,7 @@ public class WoFaBuInfoActivity extends Activity implements OnClickListener {
 			@Override
 			public void onMyFailure(Throwable arg0) {
 				dia.dismiss();
-				ToastUtil.show(WoFaBuInfoActivity.this, "任务取消失败！");
+				ToastUtil.show(WoFaBuInfoActivity.this, "任务删除失败！");
 			}
 		});
 

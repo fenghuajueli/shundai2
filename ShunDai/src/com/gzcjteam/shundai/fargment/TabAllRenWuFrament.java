@@ -82,10 +82,10 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 	private int dangQianShaiXuan = 1;
 	private MainTopBar mTopBar;
 	private Boolean isQingKong = false;
-	private static String[] school_spindata = { "全部学校", "贵州财经大学花溪校区",
-			"贵州师范大学花溪校区", "贵州医科大学花溪校区", "城市学院", "贵州轻工业职业学校", "贵州民族大学花溪校区" };
-	private static String[] kuaidi_spindata = { "全部快递", "顺丰快递", "圆通快递", "申通快递",
-			"中通快递", "天天快递", "韵达快递" };
+	private static String[] school_spindata = { "全部学校","贵州财经大学花溪校区", "贵州师范大学花溪校区",
+		"贵州医科大学花溪校区", "贵州城市学院", "贵州轻工业职业学校", "贵州民族大学花溪校区" };
+private static String[] kuaidi_spindata = { "全部快递","韵达快递", "申通快递", "顺丰快递", "EMS",
+		"圆通快递", "中通快递", "百世汇通", "京东" };
 	private Spinner school_spinner;
 	private Spinner kuaidi_spinner;
 	private ArrayAdapter<String> school_adapter;
@@ -209,7 +209,7 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 								Intent intent = new Intent();
 								intent.setClass(getActivity(),
 										RenWuInfoActivity.class);
-								intent.putExtra("task_id",info.getId());
+								intent.putExtra("task_id", info.getId());
 								startActivity(intent);
 							}
 
@@ -304,7 +304,7 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 		}
 		params.put("status", "0");
 		params.put("page", page + "");
-		params.put("page_size", "1");
+		params.put("page_size", "8");
 		RequestUtils.ClientPost(url, params, new NetCallBack() {
 			@Override
 			public void onMySuccess(String result) {
@@ -376,7 +376,7 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 		params.put("status", "0");
 		params.put("page", page + "");
 		System.out.println("传入的page" + page);
-		params.put("page_size", "1");
+		params.put("page_size", "8");
 		RequestUtils.ClientPost(url, params, new NetCallBack() {
 			@Override
 			public void onMySuccess(String result) {
@@ -411,65 +411,6 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 								msg.what = REFASHWANBI;
 								handler.sendMessage(msg);
 							}
-							Message msg = new Message();
-							msg.what = REFASHWANBI;
-							handler.sendMessage(msg);
-						}
-
-					} else {
-						Message msg = new Message();
-						msg.what = REFASHFAILED;
-						handler.sendMessage(msg);
-						refreshableView.finishRefreshing();
-						allJsondata = null;
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-
-			@Override
-			public void onMyFailure(Throwable arg0) {
-				Message msg = new Message();
-				msg.what = REFASHFAILED;
-				handler.sendMessage(msg);
-				refreshableView.finishRefreshing();
-			}
-		});
-
-		return isSuccess;
-	}
-
-	/**
-	 * 筛选更新数据方法
-	 */
-	public Boolean shaixuanData() {
-		dangQianPage = 1;
-		String url = "http://119.29.140.85/index.php/task/task_list";
-		RequestParams params = new RequestParams();
-		params.put("status", "0");
-		params.put("school_code", "1");
-		params.put("page", dangQianShaiXuan + "");
-		params.put("page_size", "2");
-		RequestUtils.ClientPost(url, params, new NetCallBack() {
-			@Override
-			public void onMySuccess(String result) {
-				try {
-					JSONObject json = new JSONObject(result);
-					Boolean status = json.getBoolean("status");
-					String info = json.getString("info");
-					JSONArray jsonarray = new JSONArray(json.getString("data"));
-					if (status) {
-						refreshableView.finishRefreshing();
-						if (jsonarray.length() > 0) {
-							Message msg = new Message();
-							msg.what = REFASHSUCCESS;
-							handler.sendMessage(msg);
-							allJsondata = json;
-							dangQianShaiXuan++;
-							shaixuanListData();
-							isSuccess = true;
-						} else {
 							Message msg = new Message();
 							msg.what = REFASHWANBI;
 							handler.sendMessage(msg);
@@ -626,7 +567,8 @@ public class TabAllRenWuFrament extends Fragment implements OnClickListener {
 						.findViewById(R.id.saddress);
 				holder.time = (TextView) convertView
 						.findViewById(R.id.sendtime);
-				holder.schoolName=(TextView) convertView.findViewById(R.id.schoolname);
+				holder.schoolName = (TextView) convertView
+						.findViewById(R.id.schoolname);
 				// 将设置好的布局保存到缓存中，并将其设置在Tag里，以便后面方便取出Tag
 				convertView.setTag(holder);
 			} else {
