@@ -4,14 +4,12 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="libs/android-support-v4.jar"/>
-   <classpathentry kind="lib" path="libs/json.jar"/>
-  <classpathentry kind="lib" path="libs/android-async-http-1.4.3.jar"/>
-  <classpathentry kind="src" path="src"/>
- <classpathentry kind="src" path="gen"/>
- <classpathentry kind="lib" path="libs/picasso-2.5.2.jar"/>
- <classpathentry kind="output" path="bin/classes"/>
- <classpathentry kind="lib" path="G:/shundai2/ShunDai/libs/open_sdk_r5756.jar"/>
- <classpathentry kind="lib" path="G:/shundai2/ShunDai/libs/mta-sdk-1.6.2.jar"/>
- <classpathentry kind="output" path="bin/classes"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="lib" path="libs/json.jar"/>
+	<classpathentry kind="lib" path="libs/android-async-http-1.4.3.jar"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="lib" path="libs/picasso-2.5.2.jar"/>
+	<classpathentry kind="lib" path="G:/shundai2/ShunDai/libs/open_sdk_r5756.jar"/>
+	<classpathentry kind="lib" path="G:/shundai2/ShunDai/libs/mta-sdk-1.6.2.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

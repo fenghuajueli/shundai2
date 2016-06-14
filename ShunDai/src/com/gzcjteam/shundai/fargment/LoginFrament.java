@@ -1,5 +1,7 @@
 package com.gzcjteam.shundai.fargment;
 
+import java.util.ArrayList;
+
 import com.gzcjteam.shundai.MainActivity;
 import com.gzcjteam.shundai.LoginActivity;
 import com.gzcjteam.shundai.R;
@@ -7,6 +9,8 @@ import com.gzcjteam.shundai.utils.ToastUtil;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQAuth;
 import com.tencent.connect.common.Constants;
+import com.tencent.connect.share.QQShare;
+import com.tencent.connect.share.QzoneShare;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
@@ -106,7 +110,29 @@ public class LoginFrament extends Fragment implements OnClickListener {
 			forgivePwd();
 		} else if (v == img) {
 			qqLogin();
-		}
+		} 
+		
+//		else if (v == btn_fenxiang) {
+//			shareToQQzone();
+//		}
+	}
+
+	private void shareToQQzone() {
+		final Bundle params = new Bundle();
+		params.putInt(QzoneShare.SHARE_TO_QZONE_KEY_TYPE,
+				QzoneShare.SHARE_TO_QZONE_TYPE_IMAGE_TEXT);
+		params.putString(QzoneShare.SHARE_TO_QQ_TITLE, "顺带在手，快递无忧");
+		params.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, "顺带是一款校园代取快递的APP 正所谓，顺带在在手，快递无忧");
+		params.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL,
+				"http://119.29.140.85/index.php");
+		ArrayList<String> imageUrls = new ArrayList<String>();
+		imageUrls
+				.add("http://media-cdn.tripadvisor.com/media/photo-s/01/3e/05/40/the-sandbar-that-links.jpg");
+		params.putStringArrayList(QzoneShare.SHARE_TO_QQ_IMAGE_URL, null);
+		params.putInt(QzoneShare.SHARE_TO_QQ_EXT_INT,
+				QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN);		
+		mTencent.shareToQzone((LoginActivity)getActivity(), params,
+				blistener);
 	}
 
 	public void qqLogin() {
@@ -140,8 +166,8 @@ public class LoginFrament extends Fragment implements OnClickListener {
 
 			System.out.println(response.toString());
 			System.out.println("登陆成功");
-			startActivity(new Intent(getActivity(), MainActivity.class));
-			getActivity().finish();
+			//startActivity(new Intent(getActivity(), MainActivity.class));
+			//getActivity().finish();
 		}
 
 		@Override

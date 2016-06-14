@@ -104,7 +104,7 @@ public class LoginActivity extends FragmentActivity implements OnClickListener {
 						saveConfig(data,PWD);
 						setUserInfo(data);
 						startActivity(new Intent().setClass(LoginActivity.this,
-								MainActivity.class));
+								ChangeGNActivity.class));
 						dia.dismiss();
 						finish();
 					} else {
